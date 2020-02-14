@@ -24,7 +24,9 @@ public class UserController {
 
 	@Autowired
 	private JwtGenerator generate;
-
+/*
+ * Controller for the Registration
+ */
 	@PostMapping("/user/registration")
 	public ResponseEntity<Response> registration(@RequestBody UserDto information){
 		

@@ -3,7 +3,14 @@ package com.bridgelabz.fundoonotes.dto;
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
+/*
+ * UserDto implementation
+ */
 @Data
 @Component
 public class UserDto {
