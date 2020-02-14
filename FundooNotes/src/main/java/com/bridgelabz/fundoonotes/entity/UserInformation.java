@@ -9,7 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 @Data
 @Entity
 @Table(name = "usersdetail")
