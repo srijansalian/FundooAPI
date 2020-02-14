@@ -24,7 +24,9 @@ public class MailServiceProvider {
 	
 	@Autowired
 	private static JavaMailSender javaMailSender;
-	
+	/*
+	 * Method that is used to Authenticate and send the mail
+	 */
 	public static void sendEmail(String toEmail, String subject, String body) {
 		Gmaildetails gmail = new Gmaildetails();
 		String fromEmail = gmail.getEmail();
@@ -44,7 +46,9 @@ public class MailServiceProvider {
 		Session session = Session.getInstance(prop, auth);
 		send(session, fromEmail, toEmail, subject, body);
 	}
-	
+	/*
+	 * Send method is used to dispatch the mail
+	 */
 	private static void send(Session session, String fromEmail, String toEmail, String subject, String body) {
 		try {
 			MimeMessage message = new MimeMessage(session);
