@@ -11,7 +11,11 @@ import com.bridgelabz.fundoonotes.dto.UserDto;
 import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.service.Services;
 import com.bridgelabz.fundoonotes.utility.JwtGenerator;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 @RestController
 public class UserController {
 	
