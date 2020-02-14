@@ -12,12 +12,19 @@ import org.springframework.stereotype.Repository;
 
 import com.bridgelabz.fundoonotes.dto.PasswordUpdate;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
+/**
+ * 
+ * @author Srijan Kumar
+ *Class for the user Implementation
+ */
 
 @Repository
 public class UserRepositoryImplementation implements UserRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
-
+/*
+ * Method used for the save and update operation
+ */
 	@Override
 	public UserInformation save(UserInformation userInfromation) {
 
@@ -25,6 +32,9 @@ public class UserRepositoryImplementation implements UserRepository {
 		session.saveOrUpdate(userInfromation);
 		return userInfromation;
 	}
+	/*
+	 * Method for the get user
+	 */
 
 	@Override
 	public UserInformation getUser(String email) {
@@ -34,6 +44,9 @@ public class UserRepositoryImplementation implements UserRepository {
 		q.setParameter("email", email);
 		return (UserInformation) q.uniqueResult();
 	}
+	/*
+	 * Method used to get the user by taking the  user id
+	 */
 
 	@Override
 	public UserInformation getUserById(Long id) {
@@ -60,6 +73,9 @@ public class UserRepositoryImplementation implements UserRepository {
 		}
 	}
 
+	/*
+	 * Method used for the verify the registration information
+	 */
 	@Override
 	public boolean verify(Long id) {
 		Session session = entityManager.unwrap(Session.class);

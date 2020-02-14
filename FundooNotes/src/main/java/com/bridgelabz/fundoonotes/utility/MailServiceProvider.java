@@ -1,6 +1,7 @@
 package com.bridgelabz.fundoonotes.utility;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Component;
 import org.springframework.mail.javamail.JavaMailSender;
 
@@ -13,6 +14,11 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 @Component
 public class MailServiceProvider {
 	

@@ -4,11 +4,17 @@ import org.springframework.stereotype.Component;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 @Component
 public class JwtGenerator {
 	private static final String SECRET = "897048816";
-	
+	/*
+	 * Method that is used to generate the jwt token 
+	 */
 	public String JwtToken(long l) {
 		String token = null;
 		try {
@@ -19,7 +25,9 @@ public class JwtGenerator {
 		}
 		return token;
 	}
-	
+	/*
+	 * Method used to parse of the jwt Token
+	 */
 	public long parseJWT(String jwt)
 	{
 		Long userId = (long) 0;

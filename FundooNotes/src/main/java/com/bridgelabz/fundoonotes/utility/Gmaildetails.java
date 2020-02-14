@@ -1,5 +1,12 @@
 package com.bridgelabz.fundoonotes.utility;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
+/*
+ * Used for the store the email and password detail of the email sender
+ */
 public class Gmaildetails {
 	private String email = "srijanksalian1@gmail.com";
 	private String password = "sinchan99";

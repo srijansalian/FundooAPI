@@ -21,7 +21,14 @@ import com.bridgelabz.fundoonotes.response.MailResponse;
 import com.bridgelabz.fundoonotes.service.Services;
 import com.bridgelabz.fundoonotes.utility.JwtGenerator;
 import com.bridgelabz.fundoonotes.utility.MailServiceProvider;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
+/*
+ * Implementation for the service declaration
+ */
 @Service
 public class ServiceImplementation implements Services {
 	private UserInformation userInformation = new UserInformation();
@@ -39,7 +46,9 @@ public class ServiceImplementation implements Services {
 	@Autowired
 	private MailObject mailObject;
 
-	
+	/*
+	 * Method for the Registration 
+	 */
 	@Transactional
 	@Override
 	public boolean register(UserDto information) {
@@ -70,7 +79,9 @@ public class ServiceImplementation implements Services {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+/*
+ * Controller method for the verify
+ */
 	@Transactional
 	@Override
 	public boolean verify(String token) throws Exception {

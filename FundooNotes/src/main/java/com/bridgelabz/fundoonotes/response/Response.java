@@ -1,7 +1,11 @@
 package com.bridgelabz.fundoonotes.response;
 
 import lombok.Data;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *Class for the store all the Response
+ */
 @Data
 public class Response {
 	private String token;

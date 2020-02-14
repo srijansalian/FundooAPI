@@ -1,7 +1,11 @@
 package com.bridgelabz.fundoonotes.response;
 
 import lombok.Data;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 @Data
 public class UserDetail {
 	private String token;
