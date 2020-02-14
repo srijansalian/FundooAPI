@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -62,8 +63,8 @@ public class UserRepositoryImplementation implements UserRepository {
 	@Override
 	public boolean verify(Long id) {
 		Session session = entityManager.unwrap(Session.class);
-		Query q = session.createQuery("update UserInformation set is_verified =:p" + " " + " " + " where id=:i");
-		q.setParameter("p", true);
+		TypedQuery<UserInformation> q = session.createQuery("update UserInformation set is_verified =:p where user_id=:i");
+		q.setParameter("p",true);
 		q.setParameter("i", id);
 		int status = q.executeUpdate();
 		if (status > 0) {

@@ -1,7 +1,14 @@
 package com.bridgelabz.fundoonotes.exception;
 
 import lombok.Getter;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
+/*
+ * The class for the User Exceptions
+ */
 @Getter
 public class UserException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

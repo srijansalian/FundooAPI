@@ -71,11 +71,13 @@ public class ServiceImplementation implements Services {
 		return null;
 	}
 
-
+	@Transactional
 	@Override
 	public boolean verify(String token) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		System.out.println("id in verification" + (long) generate.parseJWT(token));
+		Long id = (long) generate.parseJWT(token);
+		repository.verify(id);
+		return true;
 	}
 
 
