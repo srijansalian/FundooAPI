@@ -73,11 +73,25 @@ public class ServiceImplementation implements Services {
 		return false;
 	}
 
-
+@Transactional
 	@Override
 	public UserInformation login(LoginInformation information) {
-		// TODO Auto-generated method stub
-		return null;
+		UserInformation user = repository.getUser(information.getEmail());
+		if(user !=null) {
+			if((user.isVerified() == true) && (encryption.matches(information.getPassword(),user.getPassword()))) {
+			System.out.println(generate.JwtToken(user.getUserId()));
+			return user;
+		}else {
+			String mailResponse = response.fromMessage("http://localhost:8080/verify",generate.JwtToken(user.getUserId()));
+			MailServiceProvider.sendEmail(information.getEmail(),"Verification", mailResponse);
+			return null;
+		}
+		}else {
+			return null;
+		}
+
+			
+		
 	}
 /*
  * Controller method for the verify

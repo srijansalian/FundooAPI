@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgelabz.fundoonotes.dto.LoginInformation;
 import com.bridgelabz.fundoonotes.dto.UserDto;
+import com.bridgelabz.fundoonotes.entity.UserInformation;
 import com.bridgelabz.fundoonotes.response.Response;
+import com.bridgelabz.fundoonotes.response.UserDetail;
 import com.bridgelabz.fundoonotes.service.Services;
 import com.bridgelabz.fundoonotes.utility.JwtGenerator;
 /**
@@ -51,6 +54,22 @@ public class UserController {
 			
 		}
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response(token,401,"Not Verified"));
+	}
+	
+	/*
+	 * This is used to login 
+	 */
+	@PostMapping("user/login")
+	public ResponseEntity<UserDetail> login(@RequestBody LoginInformation information){
+		UserInformation userInformation = service.login(information);
+		if(userInformation !=null) {
+			String token = generate.JwtToken(userInformation.getUserId());
+			return ResponseEntity.status(HttpStatus.ACCEPTED).header("login successfull",information.getEmail()).body(new UserDetail("Login Sucessfull",200,information));
+		}
+		
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserDetail("Login is failed",400,information));
+		
 	}
 	
 
