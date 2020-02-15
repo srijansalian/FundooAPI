@@ -42,7 +42,15 @@ public class UserInformation {
 	private long mobilenumber;
 	
 	@Column(columnDefinition = "boolean Default false",nullable=false)
-	private boolean isVerified;
+	private boolean is_verified;
+	public boolean isIs_verified() {
+		return is_verified;
+	}
+
+	public void setIs_verified(boolean is_verified) {
+		this.is_verified = is_verified;
+	}
+
 	private LocalDateTime createDate;
 
 	public long getUserId() {
@@ -77,13 +85,6 @@ public class UserInformation {
 		this.mobilenumber = mobilenumber;
 	}
 
-	public boolean isVerified() {
-		return isVerified;
-	}
-
-	public void setVerified(boolean isVerified) {
-		this.isVerified = isVerified;
-	}
 
 	public LocalDateTime getCreateDate() {
 		return createDate;

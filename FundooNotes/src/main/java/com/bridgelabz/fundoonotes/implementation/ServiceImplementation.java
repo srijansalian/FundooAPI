@@ -59,7 +59,7 @@ public class ServiceImplementation implements Services {
 			userInformation.setCreateDate(LocalDateTime.now());
 			String epassword = encryption.encode(information.getPassword());
 			userInformation.setPassword(epassword);
-			userInformation.setVerified(false);
+			userInformation.setIs_verified(false);
 			userInformation = repository.save(userInformation);
 			String mailResponse = response.fromMessage("http://localhost:8080/verify",
 					generate.JwtToken(userInformation.getUserId()));
@@ -80,7 +80,7 @@ public class ServiceImplementation implements Services {
 	public UserInformation login(LoginInformation information) {
 		UserInformation user = repository.getUser(information.getEmail());
 		if (user != null) {
-			if ((user.isVerified() == true) && (encryption.matches(information.getPassword(), user.getPassword()))) {
+			if ((user.isIs_verified() == true) && (encryption.matches(information.getPassword(), user.getPassword()))) {
 				System.out.println(generate.JwtToken(user.getUserId()));
 				return user;
 			} else {
@@ -114,7 +114,7 @@ public class ServiceImplementation implements Services {
 	public boolean isUserExist(String email) {
 		try {
 			UserInformation user = repository.getUser(email);
-			if (user.isVerified() == true) {
+			if (user.isIs_verified() == true) {
 				String mailResponse = response.fromMessage("http://localhost:8080/verify",
 						generate.JwtToken(user.getUserId()));
 				MailServiceProvider.sendEmail(user.getEmail(), "Verification", mailResponse);
@@ -147,18 +147,34 @@ public class ServiceImplementation implements Services {
 			throw new UserException("Invalid Input");
 		}
 	}
+	/*
+	 * Used to get all the details from the Databases
+	 */
 	@Transactional
 	@Override
 	public List<UserInformation> getUsers() {
 		List<UserInformation> users = repository.getUsers();
-		UserInformation user = users.get(0);
+		//UserInformation user = users.get(0);
 		return users;
 	}
-
+	/*
+	 * Used to get the Single details from the Databases
+	 */
+	@Transactional
 	@Override
 	public UserInformation getsingleUser(String token) {
-		// TODO Auto-generated method stub
-		return null;
+		Long id;
+		try {
+			id = (Long) generate.parseJWT(token);
+
+		} catch (Exception e) {
+			throw new UserException("user does not exist");
+
+		}
+		UserInformation user = repository.getUserById(id);
+
+		return user;
+		
 	}
 
 }

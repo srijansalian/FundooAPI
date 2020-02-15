@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -126,5 +127,14 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The Registered user are",200,users));
 		
 	}
+	/*
+	 * API used to get the single record
+	 */
+	@GetMapping("user/getallusers")
+	public ResponseEntity<Response> getOneUser(@RequestHeader("token")String token){
+		UserInformation user =service.getsingleUser(token);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The User Details",200,user));
+	}
+	
 
 }
