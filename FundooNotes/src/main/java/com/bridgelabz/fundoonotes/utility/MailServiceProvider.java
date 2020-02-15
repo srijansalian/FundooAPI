@@ -14,6 +14,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 /**
  * 
  * @author Srijan Kumar
@@ -21,16 +22,15 @@ import javax.mail.internet.MimeMessage;
  */
 @Component
 public class MailServiceProvider {
-	
+
 	@Autowired
-	//private static JavaMailSender javaMailSender;
+	// private static JavaMailSender javaMailSender;
 	/*
 	 * Method that is used to Authenticate and send the mail
 	 */
-	
 
 	public static void sendEmail(String toEmail, String subject, String body) {
-		
+
 		String fromEmail = System.getenv("Email");
 		System.out.println(fromEmail);
 		String password = System.getenv("Password");
@@ -50,6 +50,7 @@ public class MailServiceProvider {
 		Session session = Session.getInstance(prop, auth);
 		send(session, fromEmail, toEmail, subject, body);
 	}
+
 	/*
 	 * Send method is used to dispatch the mail
 	 */
