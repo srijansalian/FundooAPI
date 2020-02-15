@@ -63,7 +63,10 @@ public class UserController {
 	public ResponseEntity<UserDetail> login(@RequestBody LoginInformation information){
 		UserInformation userInformation = service.login(information);
 		if(userInformation !=null) {
-			String token = generate.JwtToken(userInformation.getUserId());
+			//String token = generate.JwtToken(userInformation.getUserId());
+			/*
+			 * Token must be added in login  display
+			 */
 			return ResponseEntity.status(HttpStatus.ACCEPTED).header("login successfull",information.getEmail()).body(new UserDetail("Login Sucessfull",200,information));
 		}
 		
