@@ -109,7 +109,7 @@ public class ServiceImplementation implements Services {
 /*
  * Used for the check the the user is present in database or not 
  */
-	@Transactional
+	
 	@Override
 	public boolean isUserExist(String email) {
 		try {
@@ -128,17 +128,31 @@ public class ServiceImplementation implements Services {
 		}
 
 	}
-
+	/*
+	 * Used to update the password of the user
+	 */
+	@Transactional
 	@Override
 	public boolean update(PasswordUpdate information, String token) {
-		// TODO Auto-generated method stub
-		return false;
+		Long id = null;
+		System.out.println("hello");
+		try {
+		id =(Long) generate.parseJWT(token);
+		String epassword = encryption.encode(information.getConfirmpassword());
+		information.setConfirmpassword(epassword);
+		return repository.upDate(information, id);
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new UserException("Invalid Input");
+		}
 	}
-
+	@Transactional
 	@Override
 	public List<UserInformation> getUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		List<UserInformation> users = repository.getUsers();
+		UserInformation user = users.get(0);
+		return users;
 	}
 
 	@Override
