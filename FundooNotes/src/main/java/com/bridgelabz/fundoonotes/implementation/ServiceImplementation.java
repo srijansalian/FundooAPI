@@ -108,8 +108,21 @@ public class ServiceImplementation implements Services {
 
 	@Override
 	public boolean isUserExist(String email) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			UserInformation user = repository.getUser(email);
+			if(user.isVerified() == true) {
+				String mailResponse = response.fromMessage("http://localhost:8080/verify", generate.JwtToken(user.getUserId()));
+			MailServiceProvider.sendEmail(user.getEmail(),"Verification", mailResponse);	
+			return true;
+			}
+			else {
+				return false;
+			}
+			
+		}catch(Exception e) {
+			throw new UserException("User does not exit");
+		}
+		
 	}
 
 
