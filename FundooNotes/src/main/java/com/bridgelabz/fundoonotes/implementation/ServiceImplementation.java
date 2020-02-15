@@ -106,6 +106,9 @@ public class ServiceImplementation implements Services {
 		repository.verify(id);
 		return true;
 	}
+/*
+ * Used for the check the the user is present in database or not 
+ */
 	@Transactional
 	@Override
 	public boolean isUserExist(String email) {
