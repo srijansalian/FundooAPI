@@ -21,6 +21,7 @@ import com.bridgelabz.fundoonotes.response.MailResponse;
 import com.bridgelabz.fundoonotes.service.Services;
 import com.bridgelabz.fundoonotes.utility.JwtGenerator;
 import com.bridgelabz.fundoonotes.utility.MailServiceProvider;
+
 /**
  * 
  * @author Srijan Kumar
@@ -32,7 +33,7 @@ import com.bridgelabz.fundoonotes.utility.MailServiceProvider;
 @Service
 public class ServiceImplementation implements Services {
 	private UserInformation userInformation = new UserInformation();
-	
+
 	@Autowired
 	private UserRepository repository;
 	@Autowired
@@ -47,7 +48,7 @@ public class ServiceImplementation implements Services {
 	private MailObject mailObject;
 
 	/*
-	 * Method for the Registration 
+	 * Method for the Registration
 	 */
 	@Transactional
 	@Override
@@ -60,7 +61,8 @@ public class ServiceImplementation implements Services {
 			userInformation.setPassword(epassword);
 			userInformation.setVerified(false);
 			userInformation = repository.save(userInformation);
-			String mailResponse = response.fromMessage("http://localhost:8080/verify",generate.JwtToken(userInformation.getUserId()));
+			String mailResponse = response.fromMessage("http://localhost:8080/verify",
+					generate.JwtToken(userInformation.getUserId()));
 
 			mailObject.setEmail(information.getEmail());
 			mailObject.setMessage(mailResponse);
@@ -68,34 +70,34 @@ public class ServiceImplementation implements Services {
 			MailServiceProvider.sendEmail(mailObject.getEmail(), mailObject.getSubject(), mailObject.getMessage());
 
 			return true;
-		} 
-			//throw new UserException("user already exists with the same mail id");
+		}
+		// throw new UserException("user already exists with the same mail id");
 		return false;
 	}
 
-@Transactional
+	@Transactional
 	@Override
 	public UserInformation login(LoginInformation information) {
 		UserInformation user = repository.getUser(information.getEmail());
-		if(user !=null) {
-			if((user.isVerified() == true) && (encryption.matches(information.getPassword(),user.getPassword()))) {
-			System.out.println(generate.JwtToken(user.getUserId()));
-			return user;
-		}else {
-			String mailResponse = response.fromMessage("http://localhost:8080/verify",generate.JwtToken(user.getUserId()));
-			MailServiceProvider.sendEmail(information.getEmail(),"Verification", mailResponse);
-			return null;
-		}
-		}else {
+		if (user != null) {
+			if ((user.isVerified() == true) && (encryption.matches(information.getPassword(), user.getPassword()))) {
+				System.out.println(generate.JwtToken(user.getUserId()));
+				return user;
+			} else {
+				String mailResponse = response.fromMessage("http://localhost:8080/verify",
+						generate.JwtToken(user.getUserId()));
+				MailServiceProvider.sendEmail(information.getEmail(), "Verification", mailResponse);
+				return null;
+			}
+		} else {
 			return null;
 		}
 
-			
-		
 	}
-/*
- * Controller method for the verify
- */
+
+	/*
+	 * Controller method for the verify
+	 */
 	@Transactional
 	@Override
 	public boolean verify(String token) throws Exception {
@@ -104,27 +106,25 @@ public class ServiceImplementation implements Services {
 		repository.verify(id);
 		return true;
 	}
-
-
+	@Transactional
 	@Override
 	public boolean isUserExist(String email) {
 		try {
 			UserInformation user = repository.getUser(email);
-			if(user.isVerified() == true) {
-				String mailResponse = response.fromMessage("http://localhost:8080/verify", generate.JwtToken(user.getUserId()));
-			MailServiceProvider.sendEmail(user.getEmail(),"Verification", mailResponse);	
-			return true;
-			}
-			else {
+			if (user.isVerified() == true) {
+				String mailResponse = response.fromMessage("http://localhost:8080/verify",
+						generate.JwtToken(user.getUserId()));
+				MailServiceProvider.sendEmail(user.getEmail(), "Verification", mailResponse);
+				return true;
+			} else {
 				return false;
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			throw new UserException("User does not exit");
 		}
-		
-	}
 
+	}
 
 	@Override
 	public boolean update(PasswordUpdate information, String token) {
@@ -132,20 +132,16 @@ public class ServiceImplementation implements Services {
 		return false;
 	}
 
-
 	@Override
 	public List<UserInformation> getUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
 	@Override
 	public UserInformation getsingleUser(String token) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 }
