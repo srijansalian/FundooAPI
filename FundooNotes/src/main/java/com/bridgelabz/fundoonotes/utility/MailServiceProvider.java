@@ -3,7 +3,7 @@ package com.bridgelabz.fundoonotes.utility;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;
-import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.javamail.JavaMailSender;
 
 import java.util.Properties;
 
@@ -23,14 +23,18 @@ import javax.mail.internet.MimeMessage;
 public class MailServiceProvider {
 	
 	@Autowired
-	private static JavaMailSender javaMailSender;
+	//private static JavaMailSender javaMailSender;
 	/*
 	 * Method that is used to Authenticate and send the mail
 	 */
+	
+
 	public static void sendEmail(String toEmail, String subject, String body) {
-		Gmaildetails gmail = new Gmaildetails();
-		String fromEmail = gmail.getEmail();
-		String password = gmail.getPassword();
+		
+		String fromEmail = System.getenv("Email");
+		System.out.println(fromEmail);
+		String password = System.getenv("Password");
+		System.out.println(password);
 		Properties prop = new Properties();
 		prop.put("mail.smtp.auth", "true");
 		prop.put("mail.smtp.starttls.enable", "true");
