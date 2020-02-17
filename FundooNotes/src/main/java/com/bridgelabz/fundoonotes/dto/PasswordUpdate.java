@@ -1,5 +1,9 @@
 package com.bridgelabz.fundoonotes.dto;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 public class PasswordUpdate {
 	private String email;
 	private String password;

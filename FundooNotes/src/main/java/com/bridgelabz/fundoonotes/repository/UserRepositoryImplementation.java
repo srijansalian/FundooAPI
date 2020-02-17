@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import com.bridgelabz.fundoonotes.dto.PasswordUpdate;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
+
+import lombok.extern.slf4j.Slf4j;
 /**
  * 
  * @author Srijan Kumar
@@ -35,7 +37,7 @@ public class UserRepositoryImplementation implements UserRepository {
 	/*
 	 * Method for the get user
 	 */
-
+	
 	@Override
 	public UserInformation getUser(String email) {
 

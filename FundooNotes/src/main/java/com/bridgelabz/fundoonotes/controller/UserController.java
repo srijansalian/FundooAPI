@@ -23,12 +23,15 @@ import com.bridgelabz.fundoonotes.response.UserDetail;
 import com.bridgelabz.fundoonotes.service.Services;
 import com.bridgelabz.fundoonotes.utility.JwtGenerator;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
  * @author Srijan Kumar
  *
  */
 @RestController
+@Slf4j
 public class UserController {
 
 	@Autowired
@@ -40,6 +43,7 @@ public class UserController {
 	/*
 	 * API for the Registration
 	 */
+	
 	@PostMapping("/user/registration")
 	public ResponseEntity<Response> registration(@RequestBody UserDto information) {
 

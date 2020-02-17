@@ -25,7 +25,6 @@ public class UserInformation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private long userId;
 	private String name;
 	private String password;
