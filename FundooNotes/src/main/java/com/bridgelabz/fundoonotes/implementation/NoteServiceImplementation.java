@@ -1,7 +1,6 @@
 package com.bridgelabz.fundoonotes.implementation;
 
-
-
+import java.time.LocalDateTime;
 
 import javax.transaction.Transactional;
 
@@ -16,6 +15,7 @@ import com.bridgelabz.fundoonotes.repository.NoteRepository;
 import com.bridgelabz.fundoonotes.repository.UserRepository;
 import com.bridgelabz.fundoonotes.service.NoteService;
 import com.bridgelabz.fundoonotes.utility.JwtGenerator;
+
 /**
  * 
  * @author Srijan Kumar
@@ -23,7 +23,7 @@ import com.bridgelabz.fundoonotes.utility.JwtGenerator;
  */
 @Service
 public class NoteServiceImplementation implements NoteService {
-	
+
 	@Autowired
 	private JwtGenerator tokenGenerator;
 	@Autowired
@@ -38,7 +38,21 @@ public class NoteServiceImplementation implements NoteService {
 	@Transactional
 	@Override
 	public void createNote(NoteDto information, String token) {
-		
+		try {
+			Long userid = (Long)tokenGenerator.parseJWT(token);
+			user = repository.getUserById(userid);
+			if(user != null) {
+				noteInformation = modelMapper.map(information, NoteInformation.class);
+				noteInformation.setCreatedDateAndTime(LocalDateTime.now());
+				noteInformation.setArchieved(false);
+				noteInformation.setPinned(false);
+				noteInformation.setTrashed(false);
+				noteInformation.setColour("white");
+				
+				
+			}
+			
+		}
 		
 		
 	}
