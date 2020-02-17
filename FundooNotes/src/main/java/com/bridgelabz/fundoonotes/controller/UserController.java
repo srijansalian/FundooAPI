@@ -134,7 +134,7 @@ public class UserController {
 	/*
 	 * API used to get the single record
 	 */
-	@GetMapping("user/getallusers")
+	@GetMapping("user/getsingleusers")
 	public ResponseEntity<Response> getOneUser(@RequestHeader("token")String token){
 		UserInformation user =service.getsingleUser(token);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The User Details",200,user));

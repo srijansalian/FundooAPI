@@ -1,10 +1,19 @@
 package com.bridgelabz.fundoonotes.controller;
 
-import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgelabz.fundoonotes.service.NoteService;
+
+@RestController
 public class NoteController {
-	private @NonNull String title;
-	//private @NotNull String 
+	
+	@Autowired
+	private NoteService service;
+	
+	
+	
+	
 	
 
 }
