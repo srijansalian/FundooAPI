@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
  * @author Srijan Kumar
  *
  */
-public class NoteInformation {
+public class NoteUpdate {
 	@NotBlank
 	private Long id;
 	@NotNull
@@ -21,6 +21,15 @@ public class NoteInformation {
 	private boolean isTrashed;
 	private LocalDateTime createdDateAndTime;
 	private LocalDateTime upDateAndTime;
+	private String colour;
+
+	public String getColour() {
+		return colour;
+	}
+
+	public void setColour(String colour) {
+		this.colour = colour;
+	}
 
 	public Long getId() {
 		return id;

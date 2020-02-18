@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.bridgelabz.fundoonotes.dto.NoteUpdate;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
 /**
  * 
@@ -20,11 +21,11 @@ public class NoteRepositoryImplementation implements NoteRepository {
 	private EntityManager entityManager;
 
 	@Override
-	public NoteInformation save(NoteInformation noteinformation) {
+	public NoteInformation save(NoteInformation noteInformation){
 		Session session = entityManager.unwrap(Session.class);
-		session.saveOrUpdate(noteinformation);
+		session.saveOrUpdate(noteInformation);
 
-		return noteinformation;
+		return noteInformation;
 	}
 
 	@Override

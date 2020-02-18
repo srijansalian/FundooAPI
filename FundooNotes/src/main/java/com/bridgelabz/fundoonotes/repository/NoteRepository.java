@@ -1,5 +1,6 @@
 package com.bridgelabz.fundoonotes.repository;
 
+import com.bridgelabz.fundoonotes.dto.NoteUpdate;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
 
 /**
@@ -9,7 +10,7 @@ import com.bridgelabz.fundoonotes.entity.NoteInformation;
  */
 public interface NoteRepository {
 
-	NoteInformation save(NoteInformation noteinformation);
+	NoteInformation save(NoteInformation noteInformation);
 
 	NoteInformation findbyId(Long id);
 

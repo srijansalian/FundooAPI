@@ -1,6 +1,7 @@
 package com.bridgelabz.fundoonotes.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +34,7 @@ public class NoteInformation {
 	private LocalDateTime upDateAndTime;
 	private String colour;
 	private LocalDateTime remainder;
+	
 
 	public Long getId() {
 		return id;
