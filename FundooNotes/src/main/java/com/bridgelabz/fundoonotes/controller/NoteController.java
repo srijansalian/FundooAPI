@@ -36,7 +36,7 @@ public class NoteController {
 	}
 
 	/**
-	 * API for the Update
+	 * API for the Update Note
 	 * 
 	 * @param information
 	 * @param token
@@ -47,5 +47,7 @@ public class NoteController {
 		service.noteUpdate(information, token);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note Updated", 201, information));
 	}
+	
+	
 
 }
