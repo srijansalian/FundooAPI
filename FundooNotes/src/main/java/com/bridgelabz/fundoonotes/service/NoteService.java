@@ -15,4 +15,6 @@ public interface NoteService {
 
 	public void deleteNote(long id, String token);
 
+	public boolean deletepermantely(long id, String token);
+
 }

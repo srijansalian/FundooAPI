@@ -121,6 +121,9 @@ public class NoteServiceImplementation implements NoteService {
 		}
 
 	}
+	/**
+	 * Used for the archieve the Note
+	 */
 
 	@Transactional
 	@Override
@@ -140,12 +143,21 @@ public class NoteServiceImplementation implements NoteService {
 
 	}
 
+	/**
+	 * Used to move the file into trash
+	 */
 	@Transactional
 	@Override
 	public void deleteNote(long id, String token) {
 		NoteInformation info = noteRepository.findbyId(id);
 		info.setTrashed(!info.isTrashed());
 		noteRepository.save(info);
+	}
+
+	@Override
+	public boolean deletepermantely(long id, String token) {
+		
+		return false;
 	}
 
 }

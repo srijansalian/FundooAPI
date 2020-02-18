@@ -85,5 +85,7 @@ public class NoteController {
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note is moved to Trash", 200));
 
 	}
+	
+	
 
 }
