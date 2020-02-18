@@ -43,7 +43,7 @@ public class NoteController {
 	 * @param token
 	 * @return Status
 	 */
-	@PutMapping("/user/update")
+	@PutMapping("/note/update")
 	public ResponseEntity<Response> update(@RequestBody NoteUpdate information, @RequestHeader("token") String token) {
 		service.noteUpdate(information, token);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note Updated", 201, information));
@@ -55,7 +55,7 @@ public class NoteController {
 	 * @param token
 	 * @return Status
 	 */
-	@PutMapping("/user/pin/{id}")
+	@PutMapping("/note/pin/{id}")
 	public ResponseEntity<Response> pin(@PathVariable Long id , @RequestHeader("token")String token){
 		service.pinNote(id,token);
 		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Pinned",201));
@@ -68,12 +68,13 @@ public class NoteController {
 	 * @return status
 	 */
 	
-	@PutMapping("/user/archieve/{id}")
+	@PutMapping("/note/archieve/{id}")
 	public ResponseEntity<Response> archieve(@PathVariable Long id , @RequestHeader("token")String token){
 		service.archieve(id,token);
 		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Archieved",201));
 		
 	}
+	
 	
 	
 
