@@ -121,6 +121,7 @@ public class NoteServiceImplementation implements NoteService {
 		}
 
 	}
+
 	/**
 	 * Used for the archieve the Note
 	 */
@@ -154,10 +155,28 @@ public class NoteServiceImplementation implements NoteService {
 		noteRepository.save(info);
 	}
 
+	@Transactional
 	@Override
 	public boolean deletepermantely(long id, String token) {
-		
+
+		try {
+			Long userid = (Long) tokenGenerator.parseJWT(token);
+			user = repository.getUserById(userid);
+			NoteInformation info = noteRepository.findbyId(userid);
+
+			if (info != null) {
+				System.out.println(info);
+				noteRepository.deleteNode(id, userid);
+			}
+//			} else
+//				throw new UserException("Deletion is not possiable");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new UserException("Not possiable");
+
+		}
 		return false;
+
 	}
 
 }

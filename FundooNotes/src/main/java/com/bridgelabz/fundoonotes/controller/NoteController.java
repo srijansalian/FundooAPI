@@ -86,6 +86,12 @@ public class NoteController {
 
 	}
 	
-	
+	@DeleteMapping("/note/deletepermantely/{id}")
+	public ResponseEntity<Response> deletepermantely(@PathVariable long id , @RequestHeader("token")String token) {
+		service.deletepermantely(id,token);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note has been Deleted permanetly",200));
+		
+	}
 
 }

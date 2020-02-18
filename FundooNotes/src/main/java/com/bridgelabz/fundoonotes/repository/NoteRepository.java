@@ -14,6 +14,6 @@ public interface NoteRepository {
 
 	NoteInformation findbyId(Long id);
 
-	boolean deleteNode(Long id);
+	boolean deleteNode(Long id , long userid);
 
 }

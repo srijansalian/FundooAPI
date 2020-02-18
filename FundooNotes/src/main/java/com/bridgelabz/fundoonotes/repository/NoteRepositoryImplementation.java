@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bridgelabz.fundoonotes.dto.NoteUpdate;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
+
 /**
  * 
  * @author Srijan Kumar
@@ -21,7 +22,7 @@ public class NoteRepositoryImplementation implements NoteRepository {
 	private EntityManager entityManager;
 
 	@Override
-	public NoteInformation save(NoteInformation noteInformation){
+	public NoteInformation save(NoteInformation noteInformation) {
 		Session session = entityManager.unwrap(Session.class);
 		session.saveOrUpdate(noteInformation);
 
@@ -38,9 +39,25 @@ public class NoteRepositoryImplementation implements NoteRepository {
 	}
 
 	@Override
-	public boolean deleteNode(Long id) {
-		
-		return false;
+	public boolean deleteNode(Long id, long userid) {
+		Session session = entityManager.unwrap(Session.class);
+		// System.out.println(id);
+
+		// String qry = "DELETE FROM NoteInformation WHERE id=:id";
+		Query q = session.createQuery("DELETE FROM NoteInformation " + "WHERE id = :id ");
+		// Query q = session.createQuery(qry););
+		q.setParameter("id", id);
+
+		int result = q.executeUpdate();
+		// System.out.println("hello");
+		System.out.println(result);
+		if (result >= 1) {
+			return true;
+		} else {
+			return false;
+
+		}
+
 	}
 
 }
