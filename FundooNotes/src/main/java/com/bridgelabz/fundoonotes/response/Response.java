@@ -1,5 +1,7 @@
 package com.bridgelabz.fundoonotes.response;
 
+
+
 import lombok.Data;
 /**
  * 
@@ -17,6 +19,12 @@ public class Response {
 		this.token = token;
 		this.statuscode = statuscode;
 		this.obj = obj;
+	}
+	public Response(String token, int statuscode) {
+		super();
+		this.token = token;
+		this.statuscode = statuscode;
+		
 	}
 
 	public String getToken() {

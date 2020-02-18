@@ -8,5 +8,7 @@ public interface NoteService {
 	public void createNote(NoteDto information,String token);
 	
 	public void noteUpdate(NoteUpdate information,String token);
+	
+	public void pinNote(Long id ,String token);
 
 }
