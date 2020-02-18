@@ -11,4 +11,6 @@ public interface NoteService {
 	
 	public void pinNote(Long id ,String token);
 
+	public void archieve(Long id, String token);
+
 }

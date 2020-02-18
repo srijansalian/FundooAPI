@@ -99,26 +99,44 @@ public class NoteServiceImplementation implements NoteService {
 		}
 
 	}
-/**
- * Used for the pin of an Note
- */
+
+	/**
+	 * Used for the pin of an Note
+	 */
 	@Transactional
 	@Override
 	public void pinNote(Long id, String token) {
 		try {
-			Long userid = (Long ) tokenGenerator.parseJWT(token);
+			Long userid = (Long) tokenGenerator.parseJWT(token);
 			user = repository.getUserById(userid);
 			NoteInformation info = noteRepository.findbyId(userid);
-			if(info != null) {
+			if (info != null) {
 				info.setArchieved(false);
 				info.setPinned(!info.isPinned());
 				noteRepository.save(info);
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw new UserException("User is not register");
 		}
-		
-		
+
+	}
+
+	@Transactional
+	@Override
+	public void archieve(Long id, String token) {
+		try {
+			Long userid = (Long) tokenGenerator.parseJWT(token);
+			user = repository.getUserById(userid);
+			NoteInformation info = noteRepository.findbyId(userid);
+			if (info != null) {
+				info.setPinned(true);
+				info.setArchieved(!info.isArchieved());
+				noteRepository.save(info);
+			}
+		} catch (Exception e) {
+			throw new UserException("User does not exit");
+		}
+
 	}
 
 }

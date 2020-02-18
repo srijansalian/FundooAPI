@@ -62,6 +62,13 @@ public class NoteController {
 		
 	}
 	
+	@PutMapping("/user/archieve/{id}")
+	public ResponseEntity<Response> archieve(@PathVariable Long id , @RequestHeader("token")String token){
+		service.archieve(id,token);
+		return null;
+		
+	}
+	
 	
 
 }
