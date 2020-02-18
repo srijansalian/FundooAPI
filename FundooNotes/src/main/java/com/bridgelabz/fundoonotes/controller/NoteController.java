@@ -65,7 +65,7 @@ public class NoteController {
 	}
 
 	/**
-	 * 
+	 * API for the achieve the Note
 	 * @param id
 	 * @param token
 	 * @return status
@@ -77,6 +77,12 @@ public class NoteController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Archieved", 201));
 
 	}
+	/**
+	 * API for the move the note into Trash
+	 * @param id
+	 * @param token
+	 * @return status and the Body
+	 */
 
 	@DeleteMapping("/note/delete/{id}")
 	public ResponseEntity<Response> delete(@PathVariable long id, @RequestHeader("token") String token) {
@@ -85,6 +91,12 @@ public class NoteController {
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note is moved to Trash", 200));
 
 	}
+	/**
+	 * API for the Delete the note permanent
+	 * @param id
+	 * @param token
+	 * @return status and the Body
+	 */
 	
 	@DeleteMapping("/note/deletepermantely/{id}")
 	public ResponseEntity<Response> deletepermantely(@PathVariable long id , @RequestHeader("token")String token) {
