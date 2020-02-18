@@ -9,7 +9,8 @@ import lombok.Data;
 @Data
 public class LoginInformation {
 	private String email;
-	public String getEmail() {
+	private String password;
+public String getEmail() {
 		return email;
 	}
 
@@ -17,7 +18,7 @@ public class LoginInformation {
 		this.email = email;
 	}
 
-	private String password;
+	
 
 	
 	public String getPassword() {

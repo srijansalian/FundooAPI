@@ -54,7 +54,7 @@ public class NoteServiceImplementation implements NoteService {
 				noteInformation.setTrashed(false);
 				noteInformation.setColour("white");
 
-				// user.getNote().add(noteInformation);
+				 user.getNote().add(noteInformation);
 				NoteInformation note = noteRepository.save(noteInformation);
 				if (note != null) {
 					final String key = user.getEmail();
@@ -76,11 +76,11 @@ public class NoteServiceImplementation implements NoteService {
 	public void noteUpdate(NoteUpdate information, String token) {
 		try {
 			Long userid = (Long) tokenGenerator.parseJWT(token);
-			// System.out.println(userid);
+			
 			user = repository.getUserById(userid);
-			System.out.println(user);
+		
 			NoteInformation noteinfo = noteRepository.findbyId(userid);
-			// System.out.println(noteinfo);
+			System.out.println(noteinfo);
 			if (user != null) {
 				noteinfo.setId(information.getId());
 				noteinfo.setDescription(information.getDescription());

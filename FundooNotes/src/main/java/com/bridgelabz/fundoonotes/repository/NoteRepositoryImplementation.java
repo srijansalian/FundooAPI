@@ -31,7 +31,7 @@ public class NoteRepositoryImplementation implements NoteRepository {
 
 	@Override
 	public NoteInformation findbyId(Long id) {
-
+System.out.println(id);
 		Session session = entityManager.unwrap(Session.class);
 		Query q = session.createQuery("FROM NoteInformation where id=:id");
 		q.setParameter("id", id);
