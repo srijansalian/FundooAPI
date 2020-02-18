@@ -52,7 +52,7 @@ public class NoteServiceImplementation implements NoteService {
 				noteInformation.setArchieved(false);
 				noteInformation.setPinned(false);
 				noteInformation.setTrashed(false);
-				// noteInformation.setColour("white");
+				noteInformation.setColour("white");
 
 				// user.getNote().add(noteInformation);
 				NoteInformation note = noteRepository.save(noteInformation);
@@ -89,6 +89,7 @@ public class NoteServiceImplementation implements NoteService {
 				noteinfo.setTrashed(information.isTrashed());
 				noteinfo.setPinned(information.isPinned());
 				noteinfo.setUpDateAndTime(LocalDateTime.now());
+
 				noteRepository.save(noteinfo);
 
 			}
@@ -137,6 +138,14 @@ public class NoteServiceImplementation implements NoteService {
 			throw new UserException("User does not exit");
 		}
 
+	}
+
+	@Transactional
+	@Override
+	public void deleteNote(long id, String token) {
+		NoteInformation info = noteRepository.findbyId(id);
+		info.setTrashed(!info.isTrashed());
+		noteRepository.save(info);
 	}
 
 }

@@ -13,4 +13,6 @@ public interface NoteService {
 
 	public void archieve(Long id, String token);
 
+	public void deleteNote(long id, String token);
+
 }

@@ -3,6 +3,7 @@ package com.bridgelabz.fundoonotes.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,34 +49,41 @@ public class NoteController {
 		service.noteUpdate(information, token);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note Updated", 201, information));
 	}
-	
+
 	/**
 	 * API for the Pin the Note
+	 * 
 	 * @param id
 	 * @param token
 	 * @return Status
 	 */
 	@PutMapping("/note/pin/{id}")
-	public ResponseEntity<Response> pin(@PathVariable Long id , @RequestHeader("token")String token){
-		service.pinNote(id,token);
-		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Pinned",201));
-		
+	public ResponseEntity<Response> pin(@PathVariable long id, @RequestHeader("token") String token) {
+		service.pinNote(id, token);
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Pinned", 201));
+
 	}
+
 	/**
 	 * 
 	 * @param id
 	 * @param token
 	 * @return status
 	 */
-	
+
 	@PutMapping("/note/archieve/{id}")
-	public ResponseEntity<Response> archieve(@PathVariable Long id , @RequestHeader("token")String token){
-		service.archieve(id,token);
-		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Archieved",201));
-		
+	public ResponseEntity<Response> archieve(@PathVariable long id, @RequestHeader("token") String token) {
+		service.archieve(id, token);
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Archieved", 201));
+
 	}
-	
-	
-	
+
+	@DeleteMapping("/note/delete/{id}")
+	public ResponseEntity<Response> delete(@PathVariable long id, @RequestHeader("token") String token) {
+		service.deleteNote(id, token);
+
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note is moved to Trash", 200));
+
+	}
 
 }
