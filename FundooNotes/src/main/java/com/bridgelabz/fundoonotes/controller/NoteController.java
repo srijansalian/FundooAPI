@@ -61,11 +61,17 @@ public class NoteController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Pinned",201));
 		
 	}
+	/**
+	 * 
+	 * @param id
+	 * @param token
+	 * @return status
+	 */
 	
 	@PutMapping("/user/archieve/{id}")
 	public ResponseEntity<Response> archieve(@PathVariable Long id , @RequestHeader("token")String token){
 		service.archieve(id,token);
-		return null;
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Archieved",201));
 		
 	}
 	
