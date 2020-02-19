@@ -308,5 +308,28 @@ public class NoteServiceImplementation implements NoteService {
 		
 		
 	}
+	@Transactional
+	@Override
+	public void removeReminder(Long noteId, String token) {
+		try {
+			Long userid = (Long) tokenGenerator.parseJWT(token);
+			user = repository.getUserById(userid);
+			NoteInformation info = noteRepository.findbyId(noteId);
+			if(user != null) {
+				info.setRemainder(null);
+				noteRepository.save(info);
+				
+			}
+			else
+			{
+				throw new UserException("User not found");
+			}
+			
+		}catch(Exception e) {
+			throw new UserException("Not Possible");
+		}
+		
+		
+	}
 
 }

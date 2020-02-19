@@ -33,4 +33,6 @@ public interface NoteService {
 
 	public void addReminder(Long noteId, String token, ReminderDto reminder);
 
+	public void removeReminder(Long noteId, String token);
+
 }

@@ -195,7 +195,7 @@ public class NoteController {
 	 * @param noteId
 	 * @param token
 	 * @param reminder
-	 * @return
+	 * @return Status and Body
 	 */
 
 	@PutMapping("/notes/addRemainder")
@@ -203,8 +203,21 @@ public class NoteController {
 			@RequestHeader("token") String token, @RequestBody ReminderDto reminder) {
 		service.addReminder(noteId, token, reminder);
 
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Remainder has benn Added", 200, reminder));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Remainder has been Added", 200, reminder));
 
+	}
+	/**
+	 * API to remove the Remainder of an Note
+	 * @param noteId
+	 * @param token
+	 * @return status and Body
+	 */
+	@PutMapping("/notes/removeRemainder")
+	public ResponseEntity<Response> removeRemainder(@RequestParam("noteId")Long noteId,@RequestHeader("token")String token){
+		service.removeReminder(noteId,token);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Remainder has been Removed", 200));
+		
 	}
 
 }
