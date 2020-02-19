@@ -1,9 +1,12 @@
 package com.bridgelabz.fundoonotes.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,9 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.fundoonotes.dto.NoteDto;
 import com.bridgelabz.fundoonotes.dto.NoteUpdate;
+import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.service.NoteService;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 @RestController
 public class NoteController {
 
@@ -66,6 +74,7 @@ public class NoteController {
 
 	/**
 	 * API for the achieve the Note
+	 * 
 	 * @param id
 	 * @param token
 	 * @return status
@@ -77,8 +86,10 @@ public class NoteController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Archieved", 201));
 
 	}
+
 	/**
 	 * API for the move the note into Trash
+	 * 
 	 * @param id
 	 * @param token
 	 * @return status and the Body
@@ -91,19 +102,34 @@ public class NoteController {
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note is moved to Trash", 200));
 
 	}
+
 	/**
 	 * API for the Delete the note permanent
+	 * 
 	 * @param id
 	 * @param token
 	 * @return status and the Body
 	 */
-	
+
 	@DeleteMapping("/note/deletepermantely/{id}")
-	public ResponseEntity<Response> deletepermantely(@PathVariable long id , @RequestHeader("token")String token) {
-		service.deletepermantely(id,token);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note has been Deleted permanetly",200));
+	public ResponseEntity<Response> deletepermantely(@PathVariable long id, @RequestHeader("token") String token) {
+		service.deletepermantely(id, token);
+
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note has been Deleted permanetly", 200));
+
+	}
+	/**
+	 * API for get all the notes of an user
+	 * @param token
+	 * @return status and the Body
+	 */
+	@GetMapping("/note/getallnotes")
+	public ResponseEntity<Response> getallnotes(@RequestHeader("token") String token){
+		List<NoteInformation> note = service.getallnotes(token);
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The respective notes are",200,note));
 		
 	}
+	
+	
 
 }

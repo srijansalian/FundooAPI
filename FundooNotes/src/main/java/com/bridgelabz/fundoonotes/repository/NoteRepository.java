@@ -1,5 +1,7 @@
 package com.bridgelabz.fundoonotes.repository;
 
+import java.util.List;
+
 import com.bridgelabz.fundoonotes.dto.NoteUpdate;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
 
@@ -15,5 +17,6 @@ public interface NoteRepository {
 	NoteInformation findbyId(Long id);
 
 	boolean deleteNode(Long id , long userid);
+	public List<NoteInformation> getNotes(long userid);
 
 }

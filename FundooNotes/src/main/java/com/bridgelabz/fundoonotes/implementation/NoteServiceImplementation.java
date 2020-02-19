@@ -1,6 +1,7 @@
 package com.bridgelabz.fundoonotes.implementation;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -165,7 +166,7 @@ public class NoteServiceImplementation implements NoteService {
 			NoteInformation info = noteRepository.findbyId(userid);
 
 			if (info != null) {
-				System.out.println(info);
+				//System.out.println(info);
 				noteRepository.deleteNode(id, userid);
 			}
 //			} else
@@ -177,6 +178,27 @@ public class NoteServiceImplementation implements NoteService {
 		}
 		return false;
 
+	}
+
+	@Transactional
+	@Override
+	public List<NoteInformation> getallnotes(String token) {
+		
+		try {
+			Long userId = (long) tokenGenerator.parseJWT(token);
+			user = repository.getUserById(userId);
+			
+			if(user!=null) {
+				List<NoteInformation> list2 = noteRepository.getNotes(userId);
+				System.out.println(list2);
+				return list2;
+			}else {
+				throw new UserException("note is not present");
+			}
+			
+		}catch(Exception e) {
+			throw new UserException("Userv is not found");
+		}
 	}
 
 }
