@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bridgelabz.fundoonotes.dto.NoteDto;
 import com.bridgelabz.fundoonotes.dto.NoteUpdate;
+import com.bridgelabz.fundoonotes.dto.ReminderDto;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
 
 public interface NoteService {
@@ -29,5 +30,7 @@ public interface NoteService {
 	public List<NoteInformation> getPinnedNotes(String token);
 
 	public void addcolour(Long noteId, String colour, String token);
+
+	public void addReminder(Long noteId, String token, ReminderDto reminder);
 
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.fundoonotes.dto.NoteDto;
 import com.bridgelabz.fundoonotes.dto.NoteUpdate;
+import com.bridgelabz.fundoonotes.dto.ReminderDto;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.service.NoteService;
@@ -185,7 +186,24 @@ public class NoteController {
 			@RequestParam("colour") String colour, @RequestHeader("token") String token) {
 		service.addcolour(noteId, colour, token);
 
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Colour has been Changed", 200, colour));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("The Colour has been Changed", 200, colour));
+
+	}
+
+	/**
+	 * 
+	 * @param noteId
+	 * @param token
+	 * @param reminder
+	 * @return
+	 */
+
+	@PutMapping("/notes/addRemainder")
+	public ResponseEntity<Response> addRemainder(@RequestParam("noteId") Long noteId,
+			@RequestHeader("token") String token, @RequestBody ReminderDto reminder) {
+		service.addReminder(noteId, token, reminder);
+
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Remainder has benn Added", 200, reminder));
 
 	}
 

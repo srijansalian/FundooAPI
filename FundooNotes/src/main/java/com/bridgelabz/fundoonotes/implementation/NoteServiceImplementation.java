@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.bridgelabz.fundoonotes.dto.NoteDto;
 import com.bridgelabz.fundoonotes.dto.NoteUpdate;
+import com.bridgelabz.fundoonotes.dto.ReminderDto;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
 import com.bridgelabz.fundoonotes.exception.UserException;
@@ -124,7 +125,7 @@ public class NoteServiceImplementation implements NoteService {
 	}
 
 	/**
-	 * Used for the archieve the Note
+	 * Used for the archive the Note
 	 */
 
 	@Transactional
@@ -271,16 +272,41 @@ public class NoteServiceImplementation implements NoteService {
 		try {
 			Long userid = (Long) tokenGenerator.parseJWT(token);
 			user = repository.getUserById(userid);
-			NoteInformation info = noteRepository.findbyId(userid);
+			NoteInformation info = noteRepository.findbyId(noteId);
 			info.setColour(colour);
 			noteRepository.save(info);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new UserException("Not possiable");
+			throw new UserException("Not possible");
 
 		}
 
+	}
+	@Transactional
+	@Override
+	public void addReminder(Long noteId, String token, ReminderDto reminder) {
+		
+		try {
+			Long userid = (Long) tokenGenerator.parseJWT(token);
+			user = repository.getUserById(userid);
+			NoteInformation info = noteRepository.findbyId(noteId);
+			if(user != null) {
+				info.setRemainder(reminder.getReminder());
+				noteRepository.save(info);
+				
+			}
+			else
+			{
+				throw new UserException("User not found");
+			}
+			
+		}catch(Exception e) {
+			throw new UserException("Not Possible");
+		}
+		
+		
+		
 	}
 
 }
