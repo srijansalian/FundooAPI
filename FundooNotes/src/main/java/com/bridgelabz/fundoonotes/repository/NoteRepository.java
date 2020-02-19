@@ -23,4 +23,6 @@ public interface NoteRepository {
 
 	List<NoteInformation> getArchivednote(Long userId);
 
+	List<NoteInformation> getPinnedNotes(Long userId);
+
 }

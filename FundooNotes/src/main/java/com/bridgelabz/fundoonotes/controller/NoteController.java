@@ -147,7 +147,7 @@ public class NoteController {
 	}
 
 	/**
-	 * API for get all the Archived notes of an user
+	 * API for get all the Archived notes of an User
 	 * 
 	 * @param token
 	 * @return status and body
@@ -156,6 +156,19 @@ public class NoteController {
 	public ResponseEntity<Response> getArchiveNotes(@RequestHeader("token") String token) {
 		List<NoteInformation> note1 = service.getArchivedNotes(token);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Archived notes are", 200, note1));
+	}
+
+	/**
+	 * API for get all the Pinned notes of an User
+	 * 
+	 * @param token
+	 * @return status and body
+	 */
+
+	@GetMapping("/notes/getPinnedNotes")
+	public ResponseEntity<Response> getPinnedNotes(@RequestHeader("token") String token) {
+		List<NoteInformation> note1 = service.getPinnedNotes(token);
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Pinned notes are", 200, note1));
 	}
 
 }

@@ -55,7 +55,7 @@ public class NoteServiceImplementation implements NoteService {
 				noteInformation.setTrashed(false);
 				noteInformation.setColour("white");
 
-				 user.getNote().add(noteInformation);
+				user.getNote().add(noteInformation);
 				NoteInformation note = noteRepository.save(noteInformation);
 				if (note != null) {
 					final String key = user.getEmail();
@@ -77,9 +77,9 @@ public class NoteServiceImplementation implements NoteService {
 	public void noteUpdate(NoteUpdate information, String token) {
 		try {
 			Long userid = (Long) tokenGenerator.parseJWT(token);
-			
+
 			user = repository.getUserById(userid);
-		
+
 			NoteInformation noteinfo = noteRepository.findbyId(userid);
 			System.out.println(noteinfo);
 			if (user != null) {
@@ -166,7 +166,7 @@ public class NoteServiceImplementation implements NoteService {
 			NoteInformation info = noteRepository.findbyId(userid);
 
 			if (info != null) {
-				//System.out.println(info);
+				// System.out.println(info);
 				noteRepository.deleteNode(id, userid);
 			}
 //			} else
@@ -183,20 +183,20 @@ public class NoteServiceImplementation implements NoteService {
 	@Transactional
 	@Override
 	public List<NoteInformation> getallnotes(String token) {
-		
+
 		try {
 			Long userId = (long) tokenGenerator.parseJWT(token);
 			user = repository.getUserById(userId);
-			
-			if(user!=null) {
+
+			if (user != null) {
 				List<NoteInformation> list2 = noteRepository.getNotes(userId);
 				System.out.println(list2);
 				return list2;
-			}else {
+			} else {
 				throw new UserException("note is not present");
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			throw new UserException("User is not found");
 		}
 	}
@@ -207,41 +207,61 @@ public class NoteServiceImplementation implements NoteService {
 		try {
 			Long userId = (long) tokenGenerator.parseJWT(token);
 			user = repository.getUserById(userId);
-			
-			if(user!=null) {
+
+			if (user != null) {
 				List<NoteInformation> list3 = noteRepository.getTrashedNotes(userId);
 				System.out.println(list3);
 				return list3;
-			}else {
+			} else {
 				throw new UserException("note is not present");
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			throw new UserException("User is not found");
 		}
-		
-		
-		
+
 	}
+
 	@Transactional
 	@Override
 	public List<NoteInformation> getArchivedNotes(String token) {
 		try {
 			Long userId = (long) tokenGenerator.parseJWT(token);
 			user = repository.getUserById(userId);
-			
-			if(user!=null) {
+
+			if (user != null) {
 				List<NoteInformation> list4 = noteRepository.getArchivednote(userId);
 				System.out.println(list4);
 				return list4;
-			}else {
+			} else {
 				throw new UserException("note is not present");
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			throw new UserException("User is not found");
 		}
-		
+
+	}
+
+	@Transactional
+	@Override
+	public List<NoteInformation> getPinnedNotes(String token) {
+		try {
+			Long userId = (long) tokenGenerator.parseJWT(token);
+			user = repository.getUserById(userId);
+
+			if (user != null) {
+				List<NoteInformation> list5 = noteRepository.getPinnedNotes(userId);
+				System.out.println(list5);
+				return list5;
+			} else {
+				throw new UserException("note is not present");
+			}
+
+		} catch (Exception e) {
+			throw new UserException("User is not found");
+		}
+
 	}
 
 }
