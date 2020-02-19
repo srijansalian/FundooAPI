@@ -197,7 +197,7 @@ public class NoteServiceImplementation implements NoteService {
 			}
 			
 		}catch(Exception e) {
-			throw new UserException("Userv is not found");
+			throw new UserException("User is not found");
 		}
 	}
 
@@ -217,10 +217,30 @@ public class NoteServiceImplementation implements NoteService {
 			}
 			
 		}catch(Exception e) {
-			throw new UserException("Userv is not found");
+			throw new UserException("User is not found");
 		}
 		
 		
+		
+	}
+	@Transactional
+	@Override
+	public List<NoteInformation> getArchivedNotes(String token) {
+		try {
+			Long userId = (long) tokenGenerator.parseJWT(token);
+			user = repository.getUserById(userId);
+			
+			if(user!=null) {
+				List<NoteInformation> list4 = noteRepository.getArchivednote(userId);
+				System.out.println(list4);
+				return list4;
+			}else {
+				throw new UserException("note is not present");
+			}
+			
+		}catch(Exception e) {
+			throw new UserException("User is not found");
+		}
 		
 	}
 

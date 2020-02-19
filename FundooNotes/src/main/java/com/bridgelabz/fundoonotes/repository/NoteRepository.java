@@ -21,4 +21,6 @@ public interface NoteRepository {
 	
 	public List<NoteInformation> getTrashedNotes(long userid);
 
+	List<NoteInformation> getArchivednote(Long userId);
+
 }

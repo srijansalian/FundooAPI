@@ -78,4 +78,11 @@ public class NoteRepositoryImplementation implements NoteRepository {
 		return session.createQuery("from NoteInformation where user_Id='" + userid + "'" + " and is_trashed=true").getResultList();
 	}
 
+	@Override
+	public List<NoteInformation> getArchivednote(Long userId) {
+		
+		Session session = entityManager.unwrap(Session.class);
+		return session.createQuery("from NoteInformation where user_Id='" + userId + "'" + " and is_archieved=true").getResultList();
+	}
+
 }
