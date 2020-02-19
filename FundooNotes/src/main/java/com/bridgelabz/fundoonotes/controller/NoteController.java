@@ -19,6 +19,7 @@ import com.bridgelabz.fundoonotes.dto.NoteUpdate;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.service.NoteService;
+
 /**
  * 
  * @author Srijan Kumar
@@ -118,18 +119,31 @@ public class NoteController {
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note has been Deleted permanetly", 200));
 
 	}
+
 	/**
 	 * API for get all the notes of an user
+	 * 
 	 * @param token
 	 * @return status and the Body
 	 */
 	@GetMapping("/note/getallnotes")
-	public ResponseEntity<Response> getallnotes(@RequestHeader("token") String token){
+	public ResponseEntity<Response> getallnotes(@RequestHeader("token") String token) {
 		List<NoteInformation> note = service.getallnotes(token);
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("The respective notes are",200,note));
-		
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The respective notes are", 200, note));
+
 	}
-	
-	
+
+	/**
+	 * API for the get all the notes which are moved to the Trash
+	 * 
+	 * @param token
+	 * @return
+	 */
+
+	@GetMapping("/notes/getTrashedNotes")
+	public ResponseEntity<Response> gettrashedNotes(@RequestHeader("token") String token) {
+		List<NoteInformation> note1 = service.getTrashedNotes(token);
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Trashed notes are", 200, note1));
+	}
 
 }

@@ -22,4 +22,6 @@ public interface NoteService {
 
 	public List<NoteInformation> getallnotes(String token);
 
+	public List<NoteInformation> getTrashedNotes(String token);
+
 }

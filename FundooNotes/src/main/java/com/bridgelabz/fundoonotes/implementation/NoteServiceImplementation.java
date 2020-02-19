@@ -201,4 +201,27 @@ public class NoteServiceImplementation implements NoteService {
 		}
 	}
 
+	@Transactional
+	@Override
+	public List<NoteInformation> getTrashedNotes(String token) {
+		try {
+			Long userId = (long) tokenGenerator.parseJWT(token);
+			user = repository.getUserById(userId);
+			
+			if(user!=null) {
+				List<NoteInformation> list3 = noteRepository.getTrashedNotes(userId);
+				System.out.println(list3);
+				return list3;
+			}else {
+				throw new UserException("note is not present");
+			}
+			
+		}catch(Exception e) {
+			throw new UserException("Userv is not found");
+		}
+		
+		
+		
+	}
+
 }

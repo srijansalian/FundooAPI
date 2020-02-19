@@ -18,5 +18,7 @@ public interface NoteRepository {
 
 	boolean deleteNode(Long id , long userid);
 	public List<NoteInformation> getNotes(long userid);
+	
+	public List<NoteInformation> getTrashedNotes(long userid);
 
 }

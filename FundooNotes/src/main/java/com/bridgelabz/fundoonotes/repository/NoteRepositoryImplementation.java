@@ -33,7 +33,7 @@ public class NoteRepositoryImplementation implements NoteRepository {
 
 	@Override
 	public NoteInformation findbyId(Long id) {
-System.out.println(id);
+		System.out.println(id);
 		Session session = entityManager.unwrap(Session.class);
 		Query q = session.createQuery("FROM NoteInformation where id=:id");
 		q.setParameter("id", id);
@@ -61,15 +61,21 @@ System.out.println(id);
 		}
 
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
-public List<NoteInformation> getNotes(long userid) {
-		
+	public List<NoteInformation> getNotes(long userid) {
+
 		System.out.println("in repository");
 		Session session = entityManager.unwrap(Session.class);
-		return session.createQuery(
-				"from NoteInformation where user_id='" + userid + "'" + " and is_trashed=false and is_archieved=false ORDER BY id DESC")
-				.getResultList();
+		return session.createQuery("from NoteInformation where user_id='" + userid + "'"
+				+ " and is_trashed=false and is_archieved=false ORDER BY id DESC").getResultList();
+	}
+
+	@Override
+	public List<NoteInformation> getTrashedNotes(long userid) {
+		Session session = entityManager.unwrap(Session.class);
+		return session.createQuery("from NoteInformation where user_Id='" + userid + "'" + " and is_trashed=true").getResultList();
 	}
 
 }
