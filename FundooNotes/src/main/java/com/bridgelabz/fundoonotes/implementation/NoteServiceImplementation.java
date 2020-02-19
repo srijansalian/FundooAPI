@@ -264,4 +264,23 @@ public class NoteServiceImplementation implements NoteService {
 
 	}
 
+	@Transactional
+	@Override
+	public void addcolour(Long noteId, String colour, String token) {
+
+		try {
+			Long userid = (Long) tokenGenerator.parseJWT(token);
+			user = repository.getUserById(userid);
+			NoteInformation info = noteRepository.findbyId(userid);
+			info.setColour(colour);
+			noteRepository.save(info);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new UserException("Not possiable");
+
+		}
+
+	}
+
 }

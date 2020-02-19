@@ -28,4 +28,6 @@ public interface NoteService {
 
 	public List<NoteInformation> getPinnedNotes(String token);
 
+	public void addcolour(Long noteId, String colour, String token);
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.fundoonotes.dto.NoteDto;
@@ -169,6 +170,23 @@ public class NoteController {
 	public ResponseEntity<Response> getPinnedNotes(@RequestHeader("token") String token) {
 		List<NoteInformation> note1 = service.getPinnedNotes(token);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Pinned notes are", 200, note1));
+	}
+
+	/**
+	 * API for the Change the color of the Note
+	 * 
+	 * @param noteId
+	 * @param colour
+	 * @param token
+	 * @return status and Body
+	 */
+	@PutMapping("/notes/setColour")
+	public ResponseEntity<Response> getColour(@RequestParam("noteId") Long noteId,
+			@RequestParam("colour") String colour, @RequestHeader("token") String token) {
+		service.addcolour(noteId, colour, token);
+
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Colour has been Changed", 200, colour));
+
 	}
 
 }
