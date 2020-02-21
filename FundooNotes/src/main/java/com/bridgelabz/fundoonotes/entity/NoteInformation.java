@@ -3,13 +3,19 @@ package com.bridgelabz.fundoonotes.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.JoinColumn;
 import lombok.Data;
 
 /**
@@ -34,7 +40,6 @@ public class NoteInformation {
 	private LocalDateTime upDateAndTime;
 	private String colour;
 	private LocalDateTime remainder;
-	
 
 	public Long getId() {
 		return id;
@@ -115,23 +120,38 @@ public class NoteInformation {
 	public void setRemainder(LocalDateTime remainder) {
 		this.remainder = remainder;
 	}
+	public List<LabelInformation> getList() {
+		return list;
+	}
 
-	/*
-	 * @JoinTable(name = "Label_note", joinColumns = { @JoinColumn(name = "id") },
-	 * inverseJoinColumns = {
-	 * 
-	 * @JoinColumn(name = "label_id") })
-	 * 
-	 * private List<LabelInformation> list;
-	 * 
-	 * @ManyToMany(cascade = CascadeType.ALL)
-	 * 
-	 * @JoinTable(name = "Collaborator_Note", joinColumns = { @JoinColumn(name =
-	 * "id") }, inverseJoinColumns = {
-	 * 
-	 * @JoinColumn(name = "user_id") })
-	 * 
-	 * private List<LabelInformation> colabUser;
-	 */
+	public void setList(List<LabelInformation> list) {
+		this.list = list;
+	}
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "Label_Note", joinColumns = { @JoinColumn(name = "note_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "label_id") })
+	 @JsonBackReference
+	 @JsonIgnore
+	private List<LabelInformation> list;
+
+	/*@ManyToMany(cascade = CascadeType.ALL)
+
+	@JoinTable(name = "Collaborator_Note", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = {
+
+			@JoinColumn(name = "user_id") })
+
+	@JsonBackReference
+	private List<LabelInformation> colabUser;
+
+	public List<LabelInformation> getColabUser() {
+		return colabUser;
+	}
+
+	public void setColabUser(List<LabelInformation> colabUser) {
+		this.colabUser = colabUser;
+	}
+
+	*/
 
 }

@@ -10,5 +10,6 @@ public interface LabelRepository {
 	public NoteInformation saveNote(NoteInformation noteInformation);
 	
 	public LabelInformation fetchLabel(Long userid, String labelname);
+	public LabelInformation fetchLabelById(Long id);
 
 }

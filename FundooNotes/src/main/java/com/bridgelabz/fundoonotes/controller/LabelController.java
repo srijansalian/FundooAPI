@@ -69,11 +69,19 @@ public class LabelController {
 
 	}
 	
+	/**
+	 * 
+	 * @param noteId
+	 * @param token
+	 * @param labelId
+	 * @return
+	 */
+	
 	@PostMapping("/label/removelabel")
 	public ResponseEntity<Response> removelabel(@RequestParam("noteId") Long noteId, @RequestHeader("token") String token,
 			@RequestParam("labelId") Long labelId) {
 		service.removelabel(noteId, token, labelId);
-		return null;
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Removed",200,labelId));
 	}
 
 

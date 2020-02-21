@@ -44,6 +44,9 @@ public class LabelServiceImplementation implements LabelService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Autowired
+	private LabelRepository labelrepo;
+
 	@Transactional
 	@Override
 	public void createLabel(LabelDto label, String token) {
@@ -97,10 +100,25 @@ public class LabelServiceImplementation implements LabelService {
 
 		NoteInformation note = noterepository.findbyId(noteId);
 
-		LabelInformation label = labelRepository.fetchbyId(labelId);
+		LabelInformation label = labelrepo.fetchLabelById(labelId);
 
 		label.getList().add(note);
+
 		labelRepository.save(label);
+
+	}
+
+	@Transactional
+	@Override
+	public void removelabel(Long noteId, String token, Long labelId) {
+
+		NoteInformation note = noterepository.findbyId(noteId);
+
+		LabelInformation label = labelrepo.fetchLabelById(labelId);
+
+		note.getList().remove(label);
+
+		noterepository.save(note);
 
 	}
 
