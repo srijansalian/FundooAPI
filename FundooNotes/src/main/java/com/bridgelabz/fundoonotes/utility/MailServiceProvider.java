@@ -23,7 +23,7 @@ import javax.mail.internet.MimeMessage;
 @Component
 public class MailServiceProvider {
 
-	@Autowired
+	//@Autowired
 	// private static JavaMailSender javaMailSender;
 	/*
 	 * Method that is used to Authenticate and send the mail
