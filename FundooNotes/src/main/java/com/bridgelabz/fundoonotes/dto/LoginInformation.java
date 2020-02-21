@@ -1,6 +1,7 @@
 package com.bridgelabz.fundoonotes.dto;
 
 import lombok.Data;
+
 /**
  * 
  * @author Srijan Kumar
@@ -10,7 +11,8 @@ import lombok.Data;
 public class LoginInformation {
 	private String email;
 	private String password;
-public String getEmail() {
+
+	public String getEmail() {
 		return email;
 	}
 
@@ -18,9 +20,6 @@ public String getEmail() {
 		this.email = email;
 	}
 
-	
-
-	
 	public String getPassword() {
 		return password;
 	}

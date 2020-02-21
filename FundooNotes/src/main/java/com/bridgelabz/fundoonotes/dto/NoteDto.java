@@ -1,6 +1,7 @@
 package com.bridgelabz.fundoonotes.dto;
 
 import javax.validation.constraints.NotNull;
+
 /**
  * 
  * @author Srijan Kumar
@@ -9,8 +10,6 @@ import javax.validation.constraints.NotNull;
 public class NoteDto {
 	@NotNull
 	private String title;
-	@NotNull
-	private String description;
 
 	public String getTitle() {
 		return title;
@@ -19,6 +18,9 @@ public class NoteDto {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	@NotNull
+	private String description;
 
 	public String getDescription() {
 		return description;

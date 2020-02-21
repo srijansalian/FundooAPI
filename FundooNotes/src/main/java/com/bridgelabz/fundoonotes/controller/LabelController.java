@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,17 +41,6 @@ public class LabelController {
 
 	}
 
-	/*
-	 * @PostMapping("/label/createAndMapping") public ResponseEntity<Response>
-	 * createandmap (@RequestBody LabelDto label , @RequestHeader("token")String
-	 * token , @RequestParam("noteId")Long noteId){
-	 * service.createMap(label,token,noteId);
-	 * 
-	 * return null;
-	 * 
-	 * }
-	 */
-
 	/**
 	 * API for the Add the label to the Notes
 	 * 
@@ -68,21 +58,21 @@ public class LabelController {
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("label has been added to an Note", 200, labelId));
 
 	}
-	
+
 	/**
+	 * API for Remove the label from the Notes
 	 * 
 	 * @param noteId
 	 * @param token
 	 * @param labelId
 	 * @return
 	 */
-	
-	@PostMapping("/label/removelabel")
-	public ResponseEntity<Response> removelabel(@RequestParam("noteId") Long noteId, @RequestHeader("token") String token,
-			@RequestParam("labelId") Long labelId) {
-		service.removelabel(noteId, token, labelId);
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Removed",200,labelId));
-	}
 
+	@PutMapping("/label/removelabel")
+	public ResponseEntity<Response> removelabel(@RequestParam("noteId") Long noteId,
+			@RequestHeader("token") String token, @RequestParam("labelId") Long labelId) {
+		service.removelabel(noteId, token, labelId);
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Removed", 200, labelId));
+	}
 
 }

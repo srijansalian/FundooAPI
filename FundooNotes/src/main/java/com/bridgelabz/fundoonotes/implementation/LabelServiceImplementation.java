@@ -102,9 +102,10 @@ public class LabelServiceImplementation implements LabelService {
 
 		LabelInformation label = labelrepo.fetchLabelById(labelId);
 
-		label.getList().add(note);
-
-		labelRepository.save(label);
+		//label.getList().add(note);
+		note.getList().add(label);
+		noterepository.save(note);
+		//labelRepository.save(label);
 
 	}
 

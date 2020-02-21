@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
 /**
  * 
  * @author Srijan Kumar
@@ -21,9 +22,6 @@ public class NoteUpdate {
 	private boolean isTrashed;
 	private LocalDateTime createdDateAndTime;
 	private LocalDateTime upDateAndTime;
-	
-
-	
 
 	public Long getId() {
 		return id;

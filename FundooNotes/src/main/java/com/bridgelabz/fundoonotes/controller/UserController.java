@@ -21,9 +21,6 @@ import com.bridgelabz.fundoonotes.entity.UserInformation;
 import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.response.UserDetail;
 import com.bridgelabz.fundoonotes.service.Services;
-import com.bridgelabz.fundoonotes.utility.JwtGenerator;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -31,24 +28,24 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@Slf4j
+
 public class UserController {
 
 	@Autowired
 	private Services service;
 
-	@Autowired
-	private JwtGenerator generate;
-
-	/*
+	/**
 	 * API for the Registration
+	 * 
+	 * @param information
+	 * @return Status and the Body
 	 */
-	
+
 	@PostMapping("/user/registration")
 	public ResponseEntity<Response> registration(@RequestBody UserDto information) {
 
-		boolean result = service.register(information);
-		if (result) {
+		boolean value = service.register(information);
+		if (value) {
 			return ResponseEntity.status(HttpStatus.CREATED)
 					.body(new Response("Registration Successfull", 200, information));
 		}
@@ -56,21 +53,28 @@ public class UserController {
 				.body(new Response("User has been already Registered", 208, information));
 	}
 
-	/*
-	 * This API is used to Verify the token from the user
+	/**
+	 * API for the Verify the Token
+	 * 
+	 * @param token
+	 * @return Body and Status
+	 * @throws Exception
 	 */
 	@GetMapping("/verify/{token}")
 	public ResponseEntity<Response> userVerfication(@PathVariable("token") String token) throws Exception {
 		boolean update = service.verify(token);
 		if (update) {
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response(token, 200, "VERIFIED"));
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response(token, 200, "Token Has Been Verified"));
 
 		}
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response(token, 401, "Not Verified"));
 	}
 
-	/*
-	 * API is used to login
+	/**
+	 * API for the Login
+	 * 
+	 * @param information
+	 * @return Status and Body
 	 */
 	@PostMapping("user/login")
 	public ResponseEntity<UserDetail> login(@RequestBody LoginInformation information) {
@@ -87,8 +91,12 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserDetail("Login is failed", 400, information));
 
 	}
-	/*
-	 * API for the Update of the password with the Token
+
+	/**
+	 * API for the Forgot Password
+	 * 
+	 * @param email
+	 * @return Respective Status and The Body
 	 */
 
 	@PostMapping("/user/forgotpassword")
@@ -106,8 +114,12 @@ public class UserController {
 
 	}
 
-	/*
-	 * API used for the update
+	/**
+	 * API for the update the Detail
+	 * 
+	 * @param token
+	 * @param update
+	 * @return Status and Body
 	 */
 	@PutMapping("/user/update/{token}")
 	public ResponseEntity<Response> update(@PathVariable("token") String token, @RequestBody PasswordUpdate update) {
@@ -120,25 +132,29 @@ public class UserController {
 				.body(new Response("password  does not match", 402, update));
 
 	}
-	/*
-	 * API used to get all the users
+
+	/**
+	 * API to get all the Details
+	 * 
+	 * @return status and body
 	 */
 	@GetMapping("user/getusers")
-	public ResponseEntity<Response> getUsers(){
+	public ResponseEntity<Response> getUsers() {
 		List<UserInformation> users = service.getUsers();
-		
-		
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The Registered user are",200,users));
-		
+
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The Registered user are", 200, users));
+
 	}
-	/*
-	 * API used to get the single record
+
+	/**
+	 * 
+	 * @param token
+	 * @return Status and Body
 	 */
 	@GetMapping("user/getsingleusers")
-	public ResponseEntity<Response> getOneUser(@RequestHeader("token")String token){
-		UserInformation user =service.getsingleUser(token);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The User Details",200,user));
+	public ResponseEntity<Response> getOneUser(@RequestHeader("token") String token) {
+		UserInformation user = service.getsingleUser(token);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The User Details", 200, user));
 	}
-	
 
 }

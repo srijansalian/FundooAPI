@@ -50,7 +50,7 @@ public class LabelInformation {
 		this.userId = userId;
 	}
 
-	public List<NoteInformation> getList() {
+	/*public List<NoteInformation> getList() {
 		return list;
 	}
 
@@ -63,6 +63,6 @@ public class LabelInformation {
 			@JoinColumn(name = "note_id") })
 	
 	@JsonBackReference
-	private List<NoteInformation> list;
+	private List<NoteInformation> list;*/
 
 }

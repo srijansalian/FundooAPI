@@ -57,11 +57,8 @@ public class NoteServiceImplementation implements NoteService {
 				noteInformation.setColour("white");
 
 				user.getNote().add(noteInformation);
-				NoteInformation note = noteRepository.save(noteInformation);
-				if (note != null) {
-					final String key = user.getEmail();
+				noteRepository.save(noteInformation);
 
-				}
 			}
 
 		} catch (Exception e) {
@@ -157,6 +154,9 @@ public class NoteServiceImplementation implements NoteService {
 		noteRepository.save(info);
 	}
 
+	/**
+	 * Delete Note permanently
+	 */
 	@Transactional
 	@Override
 	public boolean deletepermantely(long id, String token) {
@@ -167,11 +167,10 @@ public class NoteServiceImplementation implements NoteService {
 			NoteInformation info = noteRepository.findbyId(userid);
 
 			if (info != null) {
-				// System.out.println(info);
+
 				noteRepository.deleteNode(id, userid);
 			}
-//			} else
-//				throw new UserException("Deletion is not possiable");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new UserException("Not possiable");
@@ -181,6 +180,9 @@ public class NoteServiceImplementation implements NoteService {
 
 	}
 
+	/**
+	 * Used to get all the notes from the user
+	 */
 	@Transactional
 	@Override
 	public List<NoteInformation> getallnotes(String token) {
@@ -202,6 +204,9 @@ public class NoteServiceImplementation implements NoteService {
 		}
 	}
 
+	/**
+	 * Used to get all the Trashed Notes from the user
+	 */
 	@Transactional
 	@Override
 	public List<NoteInformation> getTrashedNotes(String token) {
@@ -223,6 +228,9 @@ public class NoteServiceImplementation implements NoteService {
 
 	}
 
+	/**
+	 * Get all the Archived from the Notes
+	 */
 	@Transactional
 	@Override
 	public List<NoteInformation> getArchivedNotes(String token) {
@@ -244,6 +252,9 @@ public class NoteServiceImplementation implements NoteService {
 
 	}
 
+	/**
+	 * API used to Fetch the Pinned Notes
+	 */
 	@Transactional
 	@Override
 	public List<NoteInformation> getPinnedNotes(String token) {
@@ -265,6 +276,9 @@ public class NoteServiceImplementation implements NoteService {
 
 	}
 
+	/**
+	 * Used to add the Color to the an Note
+	 */
 	@Transactional
 	@Override
 	public void addcolour(Long noteId, String colour, String token) {
@@ -283,31 +297,36 @@ public class NoteServiceImplementation implements NoteService {
 		}
 
 	}
+
+	/**
+	 * Used to Add the Remainder
+	 */
 	@Transactional
 	@Override
 	public void addReminder(Long noteId, String token, ReminderDto reminder) {
-		
+
 		try {
 			Long userid = (Long) tokenGenerator.parseJWT(token);
 			user = repository.getUserById(userid);
 			NoteInformation info = noteRepository.findbyId(noteId);
-			if(user != null) {
+			if (user != null) {
 				info.setRemainder(reminder.getReminder());
 				noteRepository.save(info);
-				
-			}
-			else
-			{
+
+			} else {
 				throw new UserException("User not found");
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			throw new UserException("Not Possible");
 		}
-		
-		
-		
+
 	}
+
+	/**
+	 * Used to remove The Remainder
+	 */
+
 	@Transactional
 	@Override
 	public void removeReminder(Long noteId, String token) {
@@ -315,23 +334,18 @@ public class NoteServiceImplementation implements NoteService {
 			Long userid = (Long) tokenGenerator.parseJWT(token);
 			user = repository.getUserById(userid);
 			NoteInformation info = noteRepository.findbyId(noteId);
-			if(user != null) {
+			if (user != null) {
 				info.setRemainder(null);
 				noteRepository.save(info);
-				
-			}
-			else
-			{
+
+			} else {
 				throw new UserException("User not found");
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			throw new UserException("Not Possible");
 		}
-		
-		
-	}
 
-	
+	}
 
 }
