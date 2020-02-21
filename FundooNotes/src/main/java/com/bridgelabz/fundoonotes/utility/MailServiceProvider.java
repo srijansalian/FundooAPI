@@ -1,9 +1,7 @@
 package com.bridgelabz.fundoonotes.utility;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Component;
-//import org.springframework.mail.javamail.JavaMailSender;
+
 
 import java.util.Properties;
 
@@ -22,9 +20,6 @@ import javax.mail.internet.MimeMessage;
  */
 @Component
 public class MailServiceProvider {
-
-	//@Autowired
-	// private static JavaMailSender javaMailSender;
 	/*
 	 * Method that is used to Authenticate and send the mail
 	 */
@@ -64,7 +59,7 @@ public class MailServiceProvider {
 			Transport.send(message);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("exception occured while sending mail");
+			
 		}
 	}
 

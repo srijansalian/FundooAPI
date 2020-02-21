@@ -75,27 +75,6 @@ public class LabelServiceImplementation implements LabelService {
 
 	@Transactional
 	@Override
-	public void createMap(LabelDto label, String token, Long noteId) {
-		/*
-		 * try { Long id = (long) tokenGenrator.parseJWT(token); UserInformation user =
-		 * userrepository.getUserById(id); if (user != null) { LabelDto lableinfo =
-		 * labelRepository.fetchlabel(user.getUserId(), label.getName()); if (lableinfo
-		 * == null) { labelInformation = modelMapper.map(label, LabelInformation.class);
-		 * 
-		 * labelInformation.setUserId(user.getUserId());
-		 * labelRepository.save(labelInformation);
-		 * 
-		 * NoteInformation note = labelRepository.findById(noteId);
-		 * 
-		 * }
-		 * 
-		 * } }
-		 */
-
-	}
-
-	@Transactional
-	@Override
 	public void addlabel(Long noteId, String token, Long labelId) {
 
 		NoteInformation note = noterepository.findbyId(noteId);
@@ -121,6 +100,12 @@ public class LabelServiceImplementation implements LabelService {
 
 		noterepository.save(note);
 
+	}
+
+	@Override
+	public void createMap(LabelDto label, String token, Long noteId) {
+		
+		
 	}
 
 }
