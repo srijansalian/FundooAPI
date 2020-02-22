@@ -15,4 +15,6 @@ public interface LabelService {
 
 	void update(LabelUpdate label, String token);
 
+	void delete(LabelUpdate label, String token);
+
 }

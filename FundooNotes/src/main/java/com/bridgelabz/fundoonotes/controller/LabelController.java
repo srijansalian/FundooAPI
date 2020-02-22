@@ -3,6 +3,7 @@ package com.bridgelabz.fundoonotes.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,7 +67,7 @@ public class LabelController {
 	 * @param noteId
 	 * @param token
 	 * @param labelId
-	 * @return
+	 * @return status and Body
 	 */
 
 	@PutMapping("/label/removelabel")
@@ -75,19 +76,35 @@ public class LabelController {
 		service.removelabel(noteId, token, labelId);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Removed", 200, labelId));
 	}
-	
+
 	/**
 	 * API used to update the Label Name
+	 * 
+	 * @param label
+	 * @param token
+	 * @return status and Body
+	 */
+	@PutMapping("/label/updatelabel")
+	public ResponseEntity<Response> updatelabel(@RequestBody LabelUpdate label, @RequestHeader("token") String token) {
+
+		service.update(label, token);
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Updated", 200, label));
+
+	}
+
+	/**
+	 * API used to delete the Label
+	 * 
 	 * @param label
 	 * @param token
 	 * @return
 	 */
-	@PutMapping("/label/updatelabel")
-	public ResponseEntity<Response> updatelabel(@RequestBody LabelUpdate label,@RequestHeader ("token")String token ){
-		
-		service.update(label,token);
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Updated", 200, label));
-		
+
+	@DeleteMapping("/label/deletelabel")
+	public ResponseEntity<Response> deletelabel(@RequestBody LabelUpdate label, @RequestHeader("token") String token) {
+		service.delete(label, token);
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Deleted", 200, label));
+
 	}
 
 }

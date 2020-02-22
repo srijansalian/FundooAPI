@@ -60,7 +60,7 @@ public class ServiceImplementation implements Services {
 			userInformation.setCreateDate(LocalDateTime.now());
 			String epassword = encryption.encode(information.getPassword());
 			userInformation.setPassword(epassword);
-			userInformation.setIs_verified(false);
+			userInformation.set_verified(false);
 			userInformation = repository.save(userInformation);
 			String mailResponse = response.fromMessage("http://localhost:8080/verify",
 					generate.JwtToken(userInformation.getUserId()));
@@ -81,7 +81,7 @@ public class ServiceImplementation implements Services {
 	public UserInformation login(LoginInformation information) {
 		UserInformation user = repository.getUser(information.getEmail());
 		if (user != null) {
-			if ((user.isIs_verified() == true) && (encryption.matches(information.getPassword(), user.getPassword()))) {
+			if ((user.is_verified() == true) && (encryption.matches(information.getPassword(), user.getPassword()))) {
 				System.out.println(generate.JwtToken(user.getUserId()));
 				return user;
 			} else {
@@ -115,7 +115,7 @@ public class ServiceImplementation implements Services {
 	public boolean isUserExist(String email) {
 		try {
 			UserInformation user = repository.getUser(email);
-			if (user.isIs_verified() == true) {
+			if (user.is_verified() == true) {
 				String mailResponse = response.fromMessage("http://localhost:8080/verify",
 						generate.JwtToken(user.getUserId()));
 				MailServiceProvider.sendEmail(user.getEmail(), "Verification", mailResponse);
@@ -139,8 +139,8 @@ public class ServiceImplementation implements Services {
 		System.out.println("hello");
 		try {
 		id =(Long) generate.parseJWT(token);
-		String epassword = encryption.encode(information.getConfirmpassword());
-		information.setConfirmpassword(epassword);
+		String epassword = encryption.encode(information.getConfirmPassword());
+		information.setConfirmPassword(epassword);
 		return repository.upDate(information, id);
 		
 		}catch(Exception e) {

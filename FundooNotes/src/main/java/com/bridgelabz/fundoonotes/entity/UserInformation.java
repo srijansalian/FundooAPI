@@ -33,82 +33,87 @@ public class UserInformation {
 	private String name;
 	private String password;
 	private String email;
-	
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	private long mobilenumber;
-	
+	private LocalDateTime createDate;
 	@Column(columnDefinition = "boolean Default false",nullable=false)
 	private boolean is_verified;
-	public boolean isIs_verified() {
-		return is_verified;
-	}
-
-	public void setIs_verified(boolean is_verified) {
-		this.is_verified = is_verified;
-	}
-
-	private LocalDateTime createDate;
-
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public long getMobilenumber() {
-		return mobilenumber;
-	}
-
-	public void setMobilenumber(long mobilenumber) {
-		this.mobilenumber = mobilenumber;
-	}
-
-
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(LocalDateTime createDate) {
-		this.createDate = createDate;
-
-		
-	}
+	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "userId")
 	
 	private List<NoteInformation> note;
 
-	public List<NoteInformation> getNote() {
-		return note;
-	}
-
-	public void setNote(List<NoteInformation> note) {
-		this.note = note;
-	}
+//	
+//	public String getEmail() {
+//		return email;
+//	}
+//
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
+//
+//	
+//	
+//	
+//	public boolean isIs_verified() {
+//		return is_verified;
+//	}
+//
+//	public void setIs_verified(boolean is_verified) {
+//		this.is_verified = is_verified;
+//	}
+//
+//	
+//
+//	public long getUserId() {
+//		return userId;
+//	}
+//
+//	public void setUserId(long userId) {
+//		this.userId = userId;
+//	}
+//
+//	public String getName() {
+//		return name;
+//	}
+//
+//	public void setName(String name) {
+//		this.name = name;
+//	}
+//
+//	public String getPassword() {
+//		return password;
+//	}
+//
+//	public void setPassword(String password) {
+//		this.password = password;
+//	}
+//
+//	public long getMobilenumber() {
+//		return mobilenumber;
+//	}
+//
+//	public void setMobilenumber(long mobilenumber) {
+//		this.mobilenumber = mobilenumber;
+//	}
+//
+//
+//	public LocalDateTime getCreateDate() {
+//		return createDate;
+//	}
+//
+//	public void setCreateDate(LocalDateTime createDate) {
+//		this.createDate = createDate;
+//
+//		
+//	}
+//	
+//	public List<NoteInformation> getNote() {
+//		return note;
+//	}
+//
+//	public void setNote(List<NoteInformation> note) {
+//		this.note = note;
+//	}
 
 }

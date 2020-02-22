@@ -129,4 +129,27 @@ public class LabelServiceImplementation implements LabelService {
 		}
 	}
 
+	@Transactional
+	@Override
+	public void delete(LabelUpdate label, String token) {
+
+		try {
+			Long id = (long) tokenGenrator.parseJWT(token);
+			UserInformation user = userrepository.getUserById(id);
+			if (user != null) {
+
+				LabelInformation lableinformation = labelrepo.fetchLabelById(label.getLabelId());
+				if (lableinformation != null) {
+
+					labelRepository.deletebyId(id);
+				}
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("Not Possible");
+		}
+
+	}
+
 }
