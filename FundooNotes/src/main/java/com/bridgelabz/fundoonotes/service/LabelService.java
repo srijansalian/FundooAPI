@@ -1,6 +1,7 @@
 package com.bridgelabz.fundoonotes.service;
 
 import com.bridgelabz.fundoonotes.dto.LabelDto;
+import com.bridgelabz.fundoonotes.dto.LabelUpdate;
 
 public interface LabelService {
 
@@ -11,5 +12,7 @@ public interface LabelService {
 	void addlabel(Long noteId, String token, Long labelId);
 
 	void removelabel(Long noteId, String token, Long labelId);
+
+	void update(LabelUpdate label, String token);
 
 }

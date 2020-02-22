@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.fundoonotes.dto.LabelDto;
+import com.bridgelabz.fundoonotes.dto.LabelUpdate;
 import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.service.LabelService;
 
@@ -73,6 +74,20 @@ public class LabelController {
 			@RequestHeader("token") String token, @RequestParam("labelId") Long labelId) {
 		service.removelabel(noteId, token, labelId);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Removed", 200, labelId));
+	}
+	
+	/**
+	 * API used to update the Label Name
+	 * @param label
+	 * @param token
+	 * @return
+	 */
+	@PutMapping("/label/updatelabel")
+	public ResponseEntity<Response> updatelabel(@RequestBody LabelUpdate label,@RequestHeader ("token")String token ){
+		
+		service.update(label,token);
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Updated", 200, label));
+		
 	}
 
 }

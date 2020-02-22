@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bridgelabz.fundoonotes.dto.LabelDto;
+import com.bridgelabz.fundoonotes.dto.LabelUpdate;
 import com.bridgelabz.fundoonotes.entity.LabelInformation;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
@@ -81,10 +82,10 @@ public class LabelServiceImplementation implements LabelService {
 
 		LabelInformation label = labelrepo.fetchLabelById(labelId);
 
-		//label.getList().add(note);
+		// label.getList().add(note);
 		note.getList().add(label);
 		noterepository.save(note);
-		//labelRepository.save(label);
+		// labelRepository.save(label);
 
 	}
 
@@ -104,8 +105,28 @@ public class LabelServiceImplementation implements LabelService {
 
 	@Override
 	public void createMap(LabelDto label, String token, Long noteId) {
-		
-		
+
+	}
+
+	@Transactional
+	@Override
+	public void update(LabelUpdate label, String token) {
+
+		try {
+			Long id = (long) tokenGenrator.parseJWT(token);
+			UserInformation user = userrepository.getUserById(id);
+			if (user != null) {
+
+				LabelInformation lableinformation = labelrepo.fetchLabelById(label.getLabelId());
+				if (lableinformation != null) {
+					lableinformation.setName(label.getLabelName());
+					labelrepo.save(lableinformation);
+
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("User does not Exist");
+		}
 	}
 
 }
