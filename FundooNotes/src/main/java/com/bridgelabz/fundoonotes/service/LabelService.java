@@ -1,7 +1,10 @@
 package com.bridgelabz.fundoonotes.service;
 
+import java.util.List;
+
 import com.bridgelabz.fundoonotes.dto.LabelDto;
 import com.bridgelabz.fundoonotes.dto.LabelUpdate;
+import com.bridgelabz.fundoonotes.entity.LabelInformation;
 
 public interface LabelService {
 
@@ -16,5 +19,9 @@ public interface LabelService {
 	void update(LabelUpdate label, String token);
 
 	void delete(LabelUpdate label, String token);
+
+	List<LabelInformation> getLabel(String token);
+
+	void createAndMap(LabelDto label, String token, Long noteId);
 
 }

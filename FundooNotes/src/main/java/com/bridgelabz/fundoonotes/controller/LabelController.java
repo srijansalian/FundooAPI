@@ -1,9 +1,12 @@
 package com.bridgelabz.fundoonotes.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.fundoonotes.dto.LabelDto;
 import com.bridgelabz.fundoonotes.dto.LabelUpdate;
+import com.bridgelabz.fundoonotes.entity.LabelInformation;
 import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.service.LabelService;
 
@@ -104,6 +108,22 @@ public class LabelController {
 	public ResponseEntity<Response> deletelabel(@RequestBody LabelUpdate label, @RequestHeader("token") String token) {
 		service.delete(label, token);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Deleted", 200, label));
+
+	}
+	
+	@GetMapping("/label/getAllLabel")
+	public ResponseEntity<Response> getAllLabel(@RequestHeader("token")String token){
+		
+List<LabelInformation> Label = service.getLabel(token);
+return ResponseEntity.status(HttpStatus.OK).body(new Response("Labels of the User", 200, Label));
+		
+	}
+	
+	@PostMapping("/label/createAndMap")
+	public ResponseEntity<Response> createAndMAp(@RequestBody LabelDto label, @RequestHeader("token") String token,@RequestParam("noteId")Long noteId) {
+		service.createAndMap(label, token ,noteId);
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Label is Created And Mapped", 200, label));
 
 	}
 

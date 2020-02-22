@@ -42,7 +42,7 @@ public class NoteController {
 	 */
 	@PostMapping("/note/create")
 	public ResponseEntity<Response> create(@RequestBody NoteDto information, @RequestHeader("token") String token) {
-		 service.createNote(information, token);
+		service.createNote(information, token);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Created", 200, information));
 

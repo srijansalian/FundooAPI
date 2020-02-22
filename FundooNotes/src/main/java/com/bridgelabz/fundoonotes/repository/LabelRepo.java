@@ -1,5 +1,7 @@
 package com.bridgelabz.fundoonotes.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,9 +21,15 @@ public interface LabelRepo extends JpaRepository<LabelInformation, Long> {
 	@Query("from LabelInformation where label_id=:id ")
 	LabelInformation fetchbyId(long id);
 
-	@Transactional
+	
 	@Modifying
 	@Query("DELETE FROM LabelInformation WHERE label_id=:id")
 	void deletebyId(long id);
+	
+
+	@Query("from LabelInformation where user_id=:id ")
+	List<LabelInformation> fetchlabelbyId(long id);
+	
+	
 	
 }
