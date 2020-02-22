@@ -2,11 +2,16 @@ package com.bridgelabz.fundoonotes.service;
 
 import java.util.List;
 
+
 import com.bridgelabz.fundoonotes.dto.NoteDto;
 import com.bridgelabz.fundoonotes.dto.NoteUpdate;
 import com.bridgelabz.fundoonotes.dto.ReminderDto;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 public interface NoteService {
 	
 	public void createNote(NoteDto information,String token);

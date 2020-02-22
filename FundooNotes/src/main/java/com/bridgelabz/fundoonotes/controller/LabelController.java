@@ -110,18 +110,35 @@ public class LabelController {
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Deleted", 200, label));
 
 	}
-	
+
+	/**
+	 * API for the get all the label from the given token
+	 * 
+	 * @param token
+	 * @return
+	 */
+
 	@GetMapping("/label/getAllLabel")
-	public ResponseEntity<Response> getAllLabel(@RequestHeader("token")String token){
-		
-List<LabelInformation> Label = service.getLabel(token);
-return ResponseEntity.status(HttpStatus.OK).body(new Response("Labels of the User", 200, Label));
-		
+	public ResponseEntity<Response> getAllLabel(@RequestHeader("token") String token) {
+
+		List<LabelInformation> Label = service.getLabel(token);
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Labels of the User", 200, Label));
+
 	}
-	
+
+	/**
+	 * API for the create and map
+	 * 
+	 * @param label
+	 * @param token
+	 * @param noteId
+	 * @return
+	 */
+
 	@PostMapping("/label/createAndMap")
-	public ResponseEntity<Response> createAndMAp(@RequestBody LabelDto label, @RequestHeader("token") String token,@RequestParam("noteId")Long noteId) {
-		service.createAndMap(label, token ,noteId);
+	public ResponseEntity<Response> createAndMAp(@RequestBody LabelDto label, @RequestHeader("token") String token,
+			@RequestParam("noteId") Long noteId) {
+		service.createAndMap(label, token, noteId);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Label is Created And Mapped", 200, label));
 

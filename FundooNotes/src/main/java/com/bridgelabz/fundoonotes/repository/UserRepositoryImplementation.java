@@ -14,19 +14,20 @@ import com.bridgelabz.fundoonotes.dto.PasswordUpdate;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
 
 import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
- * @author Srijan Kumar
- *Class for the user Implementation
+ * @author Srijan Kumar Class for the user Implementation
  */
 
 @Repository
 public class UserRepositoryImplementation implements UserRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
-/*
- * Method used for the save and update operation
- */
+
+	/*
+	 * Method used for the save and update operation
+	 */
 	@Override
 	public UserInformation save(UserInformation userInfromation) {
 
@@ -37,7 +38,7 @@ public class UserRepositoryImplementation implements UserRepository {
 	/*
 	 * Method for the get user
 	 */
-	
+
 	@Override
 	public UserInformation getUser(String email) {
 
@@ -47,7 +48,7 @@ public class UserRepositoryImplementation implements UserRepository {
 		return (UserInformation) q.uniqueResult();
 	}
 	/*
-	 * Method used to get the user by taking the  user id
+	 * Method used to get the user by taking the user id
 	 */
 
 	@Override
@@ -81,8 +82,9 @@ public class UserRepositoryImplementation implements UserRepository {
 	@Override
 	public boolean verify(Long id) {
 		Session session = entityManager.unwrap(Session.class);
-		TypedQuery<UserInformation> q = session.createQuery("update UserInformation set is_verified =:p where user_id=:i");
-		q.setParameter("p",true);
+		TypedQuery<UserInformation> q = session
+				.createQuery("update UserInformation set is_verified =:p where user_id=:i");
+		q.setParameter("p", true);
 		q.setParameter("i", id);
 		int status = q.executeUpdate();
 		if (status > 0) {

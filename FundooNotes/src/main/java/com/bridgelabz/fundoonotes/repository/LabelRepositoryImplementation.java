@@ -1,7 +1,5 @@
 package com.bridgelabz.fundoonotes.repository;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
@@ -11,6 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import com.bridgelabz.fundoonotes.entity.LabelInformation;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
+
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 
 @Repository
 public class LabelRepositoryImplementation implements LabelRepository {
@@ -44,16 +48,18 @@ public class LabelRepositoryImplementation implements LabelRepository {
 		return (LabelInformation) q.uniqueResult();
 
 	}
+
 	@Override
 	public LabelInformation fetchLabelById(Long id) {
 
 		Session session = entityManager.unwrap(Session.class);
 		Query q = session.createQuery("from LabelInformation where label_id=:id");
-		q.setParameter("id",id);
+		q.setParameter("id", id);
 
 		return (LabelInformation) q.uniqueResult();
 
 	}
+
 	@Override
 	public int deleteLabel(Long i) {
 		String hql = "DELETE FROM LabelInformation " + "WHERE label_id = :id";
@@ -63,20 +69,5 @@ public class LabelRepositoryImplementation implements LabelRepository {
 		int result = query.executeUpdate();
 		return result;
 	}
-	
-	
-	
-	
-//	@Override
-//	public List<LabelInformation> getAllLabel(Long id)
-//	{
-//		String hql = "FROM LabelInformation " + "WHERE user_id=:id";
-//		Session session = entityManager.unwrap(Session.class);
-//		//Query query = session.createQuery(hql);
-//		return session.createQuery("from LabelInformation where user_Id='"+id+"'").getResultList();
-//		/*
-//		 * query.setParameter("id", id); return query.getResultList();
-//		 */
-	//}
 
 }

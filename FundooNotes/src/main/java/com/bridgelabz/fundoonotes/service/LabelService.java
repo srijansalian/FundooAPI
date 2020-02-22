@@ -5,7 +5,11 @@ import java.util.List;
 import com.bridgelabz.fundoonotes.dto.LabelDto;
 import com.bridgelabz.fundoonotes.dto.LabelUpdate;
 import com.bridgelabz.fundoonotes.entity.LabelInformation;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 public interface LabelService {
 
 	void createLabel(LabelDto label, String token);

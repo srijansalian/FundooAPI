@@ -15,6 +15,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
+
 @Data
 @Entity
 public class LabelInformation {

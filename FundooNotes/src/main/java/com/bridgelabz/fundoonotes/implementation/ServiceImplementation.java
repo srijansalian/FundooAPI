@@ -50,7 +50,7 @@ public class ServiceImplementation implements Services {
 	/*
 	 * Method for the Registration
 	 */
-	
+
 	@Transactional
 	@Override
 	public boolean register(UserDto information) {
@@ -76,6 +76,9 @@ public class ServiceImplementation implements Services {
 		return false;
 	}
 
+	/*
+	 * Service for the Login of the user
+	 */
 	@Transactional
 	@Override
 	public UserInformation login(LoginInformation information) {
@@ -107,10 +110,10 @@ public class ServiceImplementation implements Services {
 		repository.verify(id);
 		return true;
 	}
-/*
- * Used for the check the the user is present in database or not 
- */
-	
+	/*
+	 * Used for the check the the user is present in database or not
+	 */
+
 	@Override
 	public boolean isUserExist(String email) {
 		try {
@@ -129,6 +132,7 @@ public class ServiceImplementation implements Services {
 		}
 
 	}
+
 	/*
 	 * Used to update the password of the user
 	 */
@@ -138,16 +142,17 @@ public class ServiceImplementation implements Services {
 		Long id = null;
 		System.out.println("hello");
 		try {
-		id =(Long) generate.parseJWT(token);
-		String epassword = encryption.encode(information.getConfirmPassword());
-		information.setConfirmPassword(epassword);
-		return repository.upDate(information, id);
-		
-		}catch(Exception e) {
+			id = (Long) generate.parseJWT(token);
+			String epassword = encryption.encode(information.getConfirmPassword());
+			information.setConfirmPassword(epassword);
+			return repository.upDate(information, id);
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new UserException("Invalid Input");
 		}
 	}
+
 	/*
 	 * Used to get all the details from the Databases
 	 */
@@ -155,9 +160,10 @@ public class ServiceImplementation implements Services {
 	@Override
 	public List<UserInformation> getUsers() {
 		List<UserInformation> users = repository.getUsers();
-		//UserInformation user = users.get(0);
+		// UserInformation user = users.get(0);
 		return users;
 	}
+
 	/*
 	 * Used to get the Single details from the Databases
 	 */
@@ -175,7 +181,7 @@ public class ServiceImplementation implements Services {
 		UserInformation user = repository.getUserById(id);
 
 		return user;
-		
+
 	}
 
 }

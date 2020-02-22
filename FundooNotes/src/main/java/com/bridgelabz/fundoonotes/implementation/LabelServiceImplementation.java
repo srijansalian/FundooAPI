@@ -21,10 +21,11 @@ import com.bridgelabz.fundoonotes.repository.NoteRepository;
 import com.bridgelabz.fundoonotes.repository.UserRepository;
 import com.bridgelabz.fundoonotes.service.LabelService;
 import com.bridgelabz.fundoonotes.utility.JwtGenerator;
-
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 @Service
 public class LabelServiceImplementation implements LabelService {
 
@@ -35,8 +36,6 @@ public class LabelServiceImplementation implements LabelService {
 
 	@Autowired
 	private UserRepository userrepository;
-
-	private UserInformation user = new UserInformation();
 
 	@Autowired
 	private JwtGenerator tokenGenrator;
@@ -53,6 +52,9 @@ public class LabelServiceImplementation implements LabelService {
 	@Autowired
 	private LabelRepository labelrepo;
 
+	/**
+	 * Used to create the label of an given token
+	 */
 	@Transactional
 	@Override
 	public void createLabel(LabelDto label, String token) {
@@ -78,6 +80,9 @@ public class LabelServiceImplementation implements LabelService {
 			throw new UserException("Note does not exist with the given id");
 		}
 	}
+	/**
+	 * Used to add the label into an note
+	 */
 
 	@Transactional
 	@Override
@@ -93,6 +98,9 @@ public class LabelServiceImplementation implements LabelService {
 		// labelRepository.save(label);
 
 	}
+	/**
+	 * Used to Remove the label into an note
+	 */
 
 	@Transactional
 	@Override
@@ -107,12 +115,9 @@ public class LabelServiceImplementation implements LabelService {
 		noterepository.save(note);
 
 	}
-
-	@Override
-	public void createMap(LabelDto label, String token, Long noteId) {
-
-	}
-
+/**
+ * Used to update the label of an given token
+ */
 	@Transactional
 	@Override
 	public void update(LabelUpdate label, String token) {
@@ -133,6 +138,9 @@ public class LabelServiceImplementation implements LabelService {
 			System.out.println("User does not Exist");
 		}
 	}
+	/**
+	 * Used to Delete the label from an user
+	 */
 
 	@Transactional
 	@Override
@@ -162,20 +170,8 @@ public class LabelServiceImplementation implements LabelService {
 		}
 
 	}
-
-	/*
-	 * @Transactional
-	 * 
-	 * @Override public List<LabelInformation> getLabel(String token) { try { Long
-	 * id = (long) tokenGenrator.parseJWT(token); UserInformation user =
-	 * userrepository.getUserById(id); if (user != null) { List<LabelInformation>
-	 * list = labelrepo.getAllLabel(id); System.out.println(list); return list;
-	 * 
-	 * } else { throw new UserException("User not possiable"); }
-	 * 
-	 * } catch (Exception e) { throw new UserException("Not Possible"); }
-	 * 
-	 * }
+	/**
+	 * Used to get the all the label
 	 */
 
 	@Transactional
@@ -194,6 +190,9 @@ public class LabelServiceImplementation implements LabelService {
 		return labels;
 
 	}
+	/**
+	 * Used to create and map to the given token
+	 */
 
 	@Transactional
 	@Override
@@ -220,5 +219,10 @@ public class LabelServiceImplementation implements LabelService {
 		} catch (Exception e) {
 			throw new UserException("Not Possiable");
 		}
+	}
+	@Override
+	public void createMap(LabelDto label, String token, Long noteId) {
+		
+		
 	}
 }
