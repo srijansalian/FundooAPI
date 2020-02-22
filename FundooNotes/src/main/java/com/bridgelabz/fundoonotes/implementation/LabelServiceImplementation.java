@@ -194,4 +194,31 @@ public class LabelServiceImplementation implements LabelService {
 		return labels;
 
 	}
+
+	@Transactional
+	@Override
+	public void createAndMap(LabelDto label, String token, Long noteId) {
+
+		try {
+			Long id = (long) tokenGenrator.parseJWT(token);
+			UserInformation user = userrepository.getUserById(id);
+			if (user != null) {
+				LabelInformation lableinfo = labelRepository.fetchlabel(user.getUserId(), label.getName());
+				if (lableinfo == null) {
+					labelInformation = modelMapper.map(label, LabelInformation.class);
+					labelInformation.getLabelId();
+					labelInformation.getName();
+					labelInformation.setUserId(user.getUserId());
+					repository.save(labelInformation);
+					NoteInformation note = noterepository.findbyId(noteId);
+					note.getList().add(labelInformation);
+					noterepository.save(note);
+
+				}
+
+			}
+		} catch (Exception e) {
+			throw new UserException("Not Possiable");
+		}
+	}
 }
