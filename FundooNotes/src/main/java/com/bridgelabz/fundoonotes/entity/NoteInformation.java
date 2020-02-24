@@ -48,21 +48,6 @@ public class NoteInformation {
 	@JsonIgnore
 	private List<LabelInformation> list;
 
-	/*
-	 * @ManyToMany(cascade = CascadeType.ALL)
-	 * 
-	 * @JoinTable(name = "Collaborator_Note", joinColumns = { @JoinColumn(name =
-	 * "id") }, inverseJoinColumns = {
-	 * 
-	 * @JoinColumn(name = "user_id") })
-	 * 
-	 * @JsonBackReference private List<LabelInformation> colabUser;
-	 * 
-	 * public List<LabelInformation> getColabUser() { return colabUser; }
-	 * 
-	 * public void setColabUser(List<LabelInformation> colabUser) { this.colabUser =
-	 * colabUser; }
-	 * 
-	 */
+	
 
 }
