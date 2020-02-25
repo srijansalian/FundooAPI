@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -148,7 +149,7 @@ public class UserController {
 	}
 
 	/**
-	 * 
+	 * API Used to get the single users
 	 * @param token
 	 * @return Status and Body
 	 */
@@ -157,8 +158,15 @@ public class UserController {
 		UserInformation user = service.getsingleUser(token);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The User Details", 200, user));
 	}
+	/**
+	 * API used for the add the Collaborator
+	 * @param noteId
+	 * @param email
+	 * @param token
+	 * @return status and Body
+	 */
 	
-	@PostMapping("user/addCollab")
+	@PostMapping("user/addCollaborator")
 	public ResponseEntity<Response> addCollaborator(@RequestParam("noteId") Long noteId,@RequestParam("email") String email,
 			@RequestHeader("token") String token) {
 		
@@ -167,5 +175,31 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("collaborator added", 200, note));
 
 	}
+	
+	/**
+	 * API used for remove the Collaborator
+	 * @param noteId
+	 * @param email
+	 * @param token
+	 * @return Status and Body
+	 */
+	
+	@DeleteMapping("user/removeCollaborator")
+	public ResponseEntity<Response> removecollaborator(@RequestParam("noteId") Long noteId,@RequestParam("email") String email,
+			@RequestHeader("token") String token) {
+		service.removecollaborator(noteId, email, token);
 
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Collaborator has been Removed", 200));
+	}
+	
+	/**
+	 * API used to display the Collaborator
+	 * @param token
+	 * @return
+	 */
+	@GetMapping("user/getCollaborator")
+	public ResponseEntity<Response> getCollaborator(@RequestHeader("token") String token) {
+		List<NoteInformation> note = service.getcollaborator(token);
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The respective notes are", 200, note));
+	}
 }

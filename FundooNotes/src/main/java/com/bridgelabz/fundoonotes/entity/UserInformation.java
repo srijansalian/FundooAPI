@@ -55,6 +55,7 @@ public class UserInformation {
 	@JsonManagedReference
 	@JsonIgnore
 	private List<NoteInformation> colaborateNote;
+	
 
 
 

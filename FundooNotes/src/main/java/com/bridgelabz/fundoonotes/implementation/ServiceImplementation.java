@@ -35,6 +35,7 @@ import com.bridgelabz.fundoonotes.utility.MailServiceProvider;
 @Service
 public class ServiceImplementation implements Services {
 	private UserInformation userInformation = new UserInformation();
+	private NoteInformation noteInformation = new NoteInformation();
 
 	@Autowired
 	private UserRepository repository;
@@ -202,6 +203,12 @@ public class ServiceImplementation implements Services {
 					NoteInformation note = noterepository.findbyId(noteId);
 					collaborator.getColaborateNote().add(note);
 
+					mailObject.setEmail(email);
+					mailObject.setMessage("Note Has Been Collaborated to your Email");
+					mailObject.setSubject("Collaborated");
+					MailServiceProvider.sendEmail(mailObject.getEmail(), mailObject.getSubject(),
+							mailObject.getMessage());
+
 					return note;
 				} else {
 					throw new UserException("The collaborator does not exist");
@@ -213,6 +220,40 @@ public class ServiceImplementation implements Services {
 		} catch (Exception e) {
 			throw new UserException("Not Possible");
 		}
+
+	}
+
+	@Transactional
+	@Override
+	public void removecollaborator(Long noteId, String email, String token) {
+		UserInformation collaborator = repository.getEmail(email);
+		try {
+			Long id = (Long) generate.parseJWT(token);
+			UserInformation user = repository.getUserById(id);
+
+			if (user != null) {
+				if (collaborator != null) {
+					NoteInformation note = noterepository.findbyId(noteId);
+					// user.getColaborateNote().remove(collaborator);
+					// user.getColaborateNote().remove(collaborator);
+					collaborator.getColaborateNote().remove(note);
+
+				}
+			}
+
+		} catch (Exception e) {
+			throw new UserException("Not Possible");
+		}
+	}
+
+	@Transactional
+	@Override
+	public List<NoteInformation> getcollaborator(String token) {
+		Long id = (Long) generate.parseJWT(token);
+		UserInformation user = repository.getUserById(id);
+		List<NoteInformation> notes = user.getColaborateNote();
+
+		return notes;
 
 	}
 
