@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bridgelabz.fundoonotes.dto.LoginInformation;
 import com.bridgelabz.fundoonotes.dto.PasswordUpdate;
 import com.bridgelabz.fundoonotes.dto.UserDto;
+import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
 import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.response.UserDetail;
@@ -60,7 +61,7 @@ public class UserController {
 	 * @return Body and Status
 	 * @throws Exception
 	 */
-	@GetMapping("/verify/{token}")
+	@GetMapping("users/verify/{token}")
 	public ResponseEntity<Response> userVerfication(@PathVariable("token") String token) throws Exception {
 		boolean update = service.verify(token);
 		if (update) {
@@ -155,6 +156,16 @@ public class UserController {
 	public ResponseEntity<Response> getOneUser(@RequestHeader("token") String token) {
 		UserInformation user = service.getsingleUser(token);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The User Details", 200, user));
+	}
+	
+	@PostMapping("user/addCollab")
+	public ResponseEntity<Response> addCollaborator(@RequestParam("noteId") Long noteId,@RequestParam("email") String email,
+			@RequestHeader("token") String token) {
+		
+		NoteInformation note=service.addCollaborator(noteId, email, token);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("collaborator added", 200, note));
+
 	}
 
 }

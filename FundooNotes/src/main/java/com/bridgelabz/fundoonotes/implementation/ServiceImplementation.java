@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 import com.bridgelabz.fundoonotes.dto.LoginInformation;
 import com.bridgelabz.fundoonotes.dto.PasswordUpdate;
 import com.bridgelabz.fundoonotes.dto.UserDto;
+import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
 import com.bridgelabz.fundoonotes.exception.UserException;
+import com.bridgelabz.fundoonotes.repository.NoteRepository;
 import com.bridgelabz.fundoonotes.repository.UserRepository;
 import com.bridgelabz.fundoonotes.response.MailObject;
 import com.bridgelabz.fundoonotes.response.MailResponse;
@@ -46,6 +48,8 @@ public class ServiceImplementation implements Services {
 	private MailResponse response;
 	@Autowired
 	private MailObject mailObject;
+	@Autowired
+	private NoteRepository noterepository;
 
 	/*
 	 * Method for the Registration
@@ -62,7 +66,7 @@ public class ServiceImplementation implements Services {
 			userInformation.setPassword(epassword);
 			userInformation.set_verified(false);
 			userInformation = repository.save(userInformation);
-			String mailResponse = response.fromMessage("http://localhost:8080/verify",
+			String mailResponse = response.fromMessage("http://localhost:8080/users/verify",
 					generate.JwtToken(userInformation.getUserId()));
 
 			mailObject.setEmail(information.getEmail());
@@ -181,6 +185,34 @@ public class ServiceImplementation implements Services {
 		UserInformation user = repository.getUserById(id);
 
 		return user;
+
+	}
+
+	@Transactional
+	@Override
+	public NoteInformation addCollaborator(Long noteId, String email, String token) {
+
+		UserInformation collaborator = repository.getEmail(email);
+		try {
+			Long id = (Long) generate.parseJWT(token);
+			UserInformation user = repository.getUserById(id);
+
+			if (user != null) {
+				if (collaborator != null) {
+					NoteInformation note = noterepository.findbyId(noteId);
+					collaborator.getColaborateNote().add(note);
+
+					return note;
+				} else {
+					throw new UserException("The collaborator does not exist");
+				}
+			} else {
+				throw new UserException("The User does not exist");
+			}
+
+		} catch (Exception e) {
+			throw new UserException("Not Possible");
+		}
 
 	}
 

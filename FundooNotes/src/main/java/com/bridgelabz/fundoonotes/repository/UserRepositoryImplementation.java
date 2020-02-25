@@ -104,4 +104,14 @@ public class UserRepositoryImplementation implements UserRepository {
 
 	}
 
+	@Override
+	public UserInformation getEmail(String email) {
+		Session session = entityManager.unwrap(Session.class);
+		Query q = session.createQuery("FROM UserInformation where email =:email");
+		q.setParameter("email", email);
+		return (UserInformation) q.uniqueResult();
+		
+		
+	}
+
 }

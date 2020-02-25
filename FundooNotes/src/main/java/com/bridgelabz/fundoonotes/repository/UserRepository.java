@@ -22,5 +22,7 @@ public interface UserRepository {
 
 	List<UserInformation> getUsers();
 	
+	UserInformation getEmail(String email);
+	
 
 }

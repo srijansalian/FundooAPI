@@ -5,6 +5,7 @@ import java.util.List;
 import com.bridgelabz.fundoonotes.dto.LoginInformation;
 import com.bridgelabz.fundoonotes.dto.PasswordUpdate;
 import com.bridgelabz.fundoonotes.dto.UserDto;
+import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
 /**
  * 
@@ -24,6 +25,10 @@ public interface Services {
 	List<UserInformation> getUsers();
 
 	UserInformation getsingleUser(String token);
+	
+	NoteInformation addCollaborator(Long noteId, String email, String token);
+	
+	
 	
 
 }
