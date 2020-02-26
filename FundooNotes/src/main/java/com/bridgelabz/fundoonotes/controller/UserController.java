@@ -3,6 +3,7 @@ package com.bridgelabz.fundoonotes.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -140,6 +141,7 @@ public class UserController {
 	 * 
 	 * @return status and body
 	 */
+	@Cacheable(value = "user", key = "users")
 	@GetMapping("user/getusers")
 	public ResponseEntity<Response> getUsers() {
 		List<UserInformation> users = service.getUsers();
