@@ -63,12 +63,11 @@ public class NoteServiceImplementation implements NoteService {
 				user.getNote().add(noteInformation);
 				NoteInformation note = noteRepository.save(noteInformation);
 				if (note != null) {
-					//final String KEY = user.getEmail();
+					// final String KEY = user.getEmail();
 					try {
 
-						 elasticsearch.CreateNote(noteInformation);
+						elasticsearch.CreateNote(noteInformation);
 
-						
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -167,7 +166,7 @@ public class NoteServiceImplementation implements NoteService {
 		NoteInformation info = noteRepository.findbyId(id);
 		info.setTrashed(!info.isTrashed());
 		noteRepository.save(info);
-		
+
 	}
 
 	/**
@@ -180,10 +179,10 @@ public class NoteServiceImplementation implements NoteService {
 		try {
 			Long userid = (Long) tokenGenerator.parseJWT(token);
 			user = repository.getUserById(userid);
-			NoteInformation info = noteRepository.findbyId(userid);
+			NoteInformation info = noteRepository.findbyId(id);
 
 			if (info != null) {
-System.out.println(info.getId());
+				System.out.println(info.getId());
 				noteRepository.deleteNode(id, userid);
 				System.out.println(info.getId());
 				elasticsearch.DeleteNote(info);
@@ -368,14 +367,13 @@ System.out.println(info.getId());
 
 	@Override
 	public List<NoteInformation> searchByTitle(String title) {
-		List<NoteInformation> notes=elasticsearch.searchbytitle(title);
-		if(notes!=null) {
-		return notes;
-		}
-		else {
+		List<NoteInformation> notes = elasticsearch.searchbytitle(title);
+		if (notes != null) {
+			return notes;
+		} else {
 			return null;
 		}
-		
+
 	}
 
 }
