@@ -3,6 +3,7 @@ package com.bridgelabz.fundoonotes.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,7 @@ public class UserController {
 	 */
 
 	@PostMapping("/user/registration")
+	
 	public ResponseEntity<Response> registration(@RequestBody UserDto information) {
 
 		boolean value = service.register(information);
@@ -79,6 +81,7 @@ public class UserController {
 	 * @param information
 	 * @return Status and Body
 	 */
+	
 	@PostMapping("user/login")
 	public ResponseEntity<UserDetail> login(@RequestBody LoginInformation information) {
 		UserInformation userInformation = service.login(information);
@@ -101,7 +104,7 @@ public class UserController {
 	 * @param email
 	 * @return Respective Status and The Body
 	 */
-
+	
 	@PostMapping("/user/forgotpassword")
 	public ResponseEntity<Response> forgotPassword(@RequestParam("email") String email) {
 
@@ -124,6 +127,7 @@ public class UserController {
 	 * @param update
 	 * @return Status and Body
 	 */
+	
 	@PutMapping("/user/update/{token}")
 	public ResponseEntity<Response> update(@PathVariable("token") String token, @RequestBody PasswordUpdate update) {
 		boolean result = service.update(update, token);
@@ -141,7 +145,7 @@ public class UserController {
 	 * 
 	 * @return status and body
 	 */
-	@Cacheable(value = "user", key = "users")
+	
 	@GetMapping("user/getusers")
 	public ResponseEntity<Response> getUsers() {
 		List<UserInformation> users = service.getUsers();

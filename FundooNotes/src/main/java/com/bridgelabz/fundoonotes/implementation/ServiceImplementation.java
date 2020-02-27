@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.bridgelabz.fundoonotes.configuration.RabbitmqSender;
 import com.bridgelabz.fundoonotes.dto.LoginInformation;
 import com.bridgelabz.fundoonotes.dto.PasswordUpdate;
 import com.bridgelabz.fundoonotes.dto.UserDto;
@@ -35,7 +36,7 @@ import com.bridgelabz.fundoonotes.utility.MailServiceProvider;
 @Service
 public class ServiceImplementation implements Services {
 	private UserInformation userInformation = new UserInformation();
-	private NoteInformation noteInformation = new NoteInformation();
+//	private NoteInformation noteInformation = new NoteInformation();
 
 	@Autowired
 	private UserRepository repository;
@@ -51,6 +52,9 @@ public class ServiceImplementation implements Services {
 	private MailObject mailObject;
 	@Autowired
 	private NoteRepository noterepository;
+	
+	@Autowired
+	private RabbitmqSender rabbitmq;
 
 	/*
 	 * Method for the Registration
@@ -73,8 +77,8 @@ public class ServiceImplementation implements Services {
 			mailObject.setEmail(information.getEmail());
 			mailObject.setMessage(mailResponse);
 			mailObject.setSubject("verification");
-			MailServiceProvider.sendEmail(mailObject.getEmail(), mailObject.getSubject(), mailObject.getMessage());
-
+			//MailServiceProvider.sendEmail(mailObject.getEmail(), mailObject.getSubject(), mailObject.getMessage());
+			rabbitmq.send(mailObject);
 			return true;
 		}
 		// throw new UserException("user already exists with the same mail id");
@@ -206,9 +210,9 @@ public class ServiceImplementation implements Services {
 					mailObject.setEmail(email);
 					mailObject.setMessage("Note Has Been Collaborated to your Email");
 					mailObject.setSubject("Collaborated");
-					MailServiceProvider.sendEmail(mailObject.getEmail(), mailObject.getSubject(),
-							mailObject.getMessage());
-
+//					MailServiceProvider.sendEmail(mailObject.getEmail(), mailObject.getSubject(),
+//							mailObject.getMessage());
+					rabbitmq.send(mailObject);
 					return note;
 				} else {
 					throw new UserException("The collaborator does not exist");
