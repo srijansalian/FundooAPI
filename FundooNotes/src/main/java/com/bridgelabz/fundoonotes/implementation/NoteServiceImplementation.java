@@ -17,6 +17,7 @@ import com.bridgelabz.fundoonotes.entity.UserInformation;
 import com.bridgelabz.fundoonotes.exception.UserException;
 import com.bridgelabz.fundoonotes.repository.NoteRepository;
 import com.bridgelabz.fundoonotes.repository.UserRepository;
+import com.bridgelabz.fundoonotes.service.ElasticSearch;
 import com.bridgelabz.fundoonotes.service.NoteService;
 import com.bridgelabz.fundoonotes.utility.JwtGenerator;
 
@@ -39,6 +40,9 @@ public class NoteServiceImplementation implements NoteService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Autowired
+	private ElasticSearch elasticsearch;
+
 	/**
 	 * Create a Note
 	 */
@@ -57,7 +61,18 @@ public class NoteServiceImplementation implements NoteService {
 				noteInformation.setColour("white");
 
 				user.getNote().add(noteInformation);
-				noteRepository.save(noteInformation);
+				NoteInformation note = noteRepository.save(noteInformation);
+				if (note != null) {
+					//final String KEY = user.getEmail();
+					try {
+
+						 elasticsearch.CreateNote(noteInformation);
+
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 
 			}
 
@@ -152,6 +167,7 @@ public class NoteServiceImplementation implements NoteService {
 		NoteInformation info = noteRepository.findbyId(id);
 		info.setTrashed(!info.isTrashed());
 		noteRepository.save(info);
+		
 	}
 
 	/**
@@ -167,8 +183,10 @@ public class NoteServiceImplementation implements NoteService {
 			NoteInformation info = noteRepository.findbyId(userid);
 
 			if (info != null) {
-
+System.out.println(info.getId());
 				noteRepository.deleteNode(id, userid);
+				System.out.println(info.getId());
+				elasticsearch.DeleteNote(info);
 			}
 
 		} catch (Exception e) {
@@ -346,6 +364,18 @@ public class NoteServiceImplementation implements NoteService {
 			throw new UserException("Not Possible");
 		}
 
+	}
+
+	@Override
+	public List<NoteInformation> searchByTitle(String title) {
+		List<NoteInformation> notes=elasticsearch.searchbytitle(title);
+		if(notes!=null) {
+		return notes;
+		}
+		else {
+			return null;
+		}
+		
 	}
 
 }

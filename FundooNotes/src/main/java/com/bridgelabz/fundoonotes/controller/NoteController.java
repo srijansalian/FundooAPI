@@ -222,5 +222,13 @@ public class NoteController {
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Remainder has been Removed", 200));
 
 	}
+	
+	@GetMapping("/note/search")
+	public ResponseEntity<Response> search(@RequestParam("title") String title,
+			 @RequestHeader("token") String token) {
+		     List<NoteInformation> notes=service.searchByTitle(title);
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("The note you are looking for is", 200, notes));
+
+	}
 
 }

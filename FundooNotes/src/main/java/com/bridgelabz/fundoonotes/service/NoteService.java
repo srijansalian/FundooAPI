@@ -40,6 +40,8 @@ public interface NoteService {
 
 	public void removeReminder(Long noteId, String token);
 
+	public List<NoteInformation> searchByTitle(String title);
+
 	
 
 }
