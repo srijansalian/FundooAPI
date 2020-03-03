@@ -81,7 +81,6 @@ public class UserController {
 	 * @param information
 	 * @return Status and Body
 	 */
-	
 	@PostMapping("user/login")
 	public ResponseEntity<UserDetail> login(@RequestBody LoginInformation information) {
 		UserInformation userInformation = service.login(information);

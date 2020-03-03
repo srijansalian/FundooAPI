@@ -18,7 +18,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bridgelabz.fundoonotes.controller.ElasticSearchConfig;
+import com.bridgelabz.fundoonotes.configuration.ElasticSearchConfig;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.service.ElasticSearch;
 import com.fasterxml.jackson.databind.ObjectMapper;
