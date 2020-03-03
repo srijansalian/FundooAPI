@@ -12,15 +12,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.S3Object;
 import com.bridgelabz.fundoonotes.entity.Profile;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
 import com.bridgelabz.fundoonotes.repository.ProfilePicture;
 import com.bridgelabz.fundoonotes.repository.UserRepository;
 import com.bridgelabz.fundoonotes.service.ProfilePicService;
 import com.bridgelabz.fundoonotes.utility.JwtGenerator;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Service Implementation for the profile upload
@@ -82,17 +82,13 @@ public class ProfilePicServiceImplementation implements ProfilePicService {
 			UserInformation user = userrepository.getUserById(id);
 			Profile profile = profilepic.findByUserId(id);
 			if (user != null && profile != null) {
-
-				deleteObject(profile.getProfileName());
-				//profilepic.deletebyId(id);
-				//Profile profile = new Profile(originalFilename, user);
 				profilepic.updateprofile(id, originalFilename);
 				ObjectMetadata objectMetadata = new ObjectMetadata();
 				objectMetadata.setContentType(contentType);
 				objectMetadata.setContentLength(file.getSize());
 
 				amazonS3Client.putObject(bucketName, originalFilename, file.getInputStream(), objectMetadata);
-				//profilepic.save(profile);
+
 				return profile;
 			}
 			return null;
@@ -102,14 +98,40 @@ public class ProfilePicServiceImplementation implements ProfilePicService {
 		return null;
 	}
 
-	public void deleteObject(String key) {
+	@Transactional
+	@Override
+	public S3Object getProfilePic(String token) {
 		try {
-			amazonS3Client.deleteObject(bucketName, key);
-		} catch (AmazonServiceException serviceException) {
-
-		} catch (AmazonClientException exception) {
-
+			Long id = (long) jwtgenerator.parseJWT(token);
+			UserInformation user = userrepository.getUserById(id);
+			if (user != null) {
+				Profile profile = profilepic.findByUserId(id);
+				if (profile != null) {
+					return fetchObject(profile.getProfileName());
+				} else {
+					return null;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return null;
+
+	}
+
+	public S3Object fetchObject(String awsFileName) {
+		S3Object s3Object;
+		try {
+			s3Object = amazonS3Client.getObject(new GetObjectRequest(bucketName, awsFileName));
+		} catch (AmazonServiceException serviceException) {
+			serviceException.printStackTrace();
+
+			throw new RuntimeException("Error while streaming File.");
+		} catch (AmazonClientException exception) {
+			exception.printStackTrace();
+			throw new RuntimeException("Error while streaming File.");
+		}
+		return s3Object;
 	}
 
 }
