@@ -26,7 +26,7 @@ package com.bridgelabz.fundoonotes.configuration;
 
 	    @Bean
 	    public AmazonS3 awsS3Client() {
-	        BasicAWSCredentials awsCreds = new BasicAWSCredentials(awsKeyId, accessKey);
+	        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey,awsKeyId);
 	        return AmazonS3ClientBuilder.standard().withRegion(Regions.fromName(region))
 	                .withCredentials(new AWSStaticCredentialsProvider(awsCreds)).build();
 	    }
