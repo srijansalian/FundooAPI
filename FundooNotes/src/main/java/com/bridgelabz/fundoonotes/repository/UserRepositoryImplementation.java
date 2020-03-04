@@ -13,8 +13,6 @@ import org.springframework.stereotype.Repository;
 import com.bridgelabz.fundoonotes.dto.PasswordUpdate;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 
  * @author Srijan Kumar Class for the user Implementation
@@ -110,8 +108,7 @@ public class UserRepositoryImplementation implements UserRepository {
 		Query q = session.createQuery("FROM UserInformation where email =:email");
 		q.setParameter("email", email);
 		return (UserInformation) q.uniqueResult();
-		
-		
+
 	}
 
 }

@@ -21,6 +21,7 @@ import com.bridgelabz.fundoonotes.repository.NoteRepository;
 import com.bridgelabz.fundoonotes.repository.UserRepository;
 import com.bridgelabz.fundoonotes.service.LabelService;
 import com.bridgelabz.fundoonotes.utility.JwtGenerator;
+
 /**
  * 
  * @author Srijan Kumar
@@ -80,6 +81,7 @@ public class LabelServiceImplementation implements LabelService {
 			throw new UserException("Note does not exist with the given id");
 		}
 	}
+
 	/**
 	 * Used to add the label into an note
 	 */
@@ -92,12 +94,11 @@ public class LabelServiceImplementation implements LabelService {
 
 		LabelInformation label = labelrepo.fetchLabelById(labelId);
 
-		// label.getList().add(note);
 		note.getList().add(label);
 		noterepository.save(note);
-		// labelRepository.save(label);
 
 	}
+
 	/**
 	 * Used to Remove the label into an note
 	 */
@@ -115,9 +116,10 @@ public class LabelServiceImplementation implements LabelService {
 		noterepository.save(note);
 
 	}
-/**
- * Used to update the label of an given token
- */
+
+	/**
+	 * Used to update the label of an given token
+	 */
 	@Transactional
 	@Override
 	public void update(LabelUpdate label, String token) {
@@ -138,6 +140,7 @@ public class LabelServiceImplementation implements LabelService {
 			System.out.println("User does not Exist");
 		}
 	}
+
 	/**
 	 * Used to Delete the label from an user
 	 */
@@ -170,6 +173,7 @@ public class LabelServiceImplementation implements LabelService {
 		}
 
 	}
+
 	/**
 	 * Used to get the all the label
 	 */
@@ -190,6 +194,7 @@ public class LabelServiceImplementation implements LabelService {
 		return labels;
 
 	}
+
 	/**
 	 * Used to create and map to the given token
 	 */
@@ -220,9 +225,9 @@ public class LabelServiceImplementation implements LabelService {
 			throw new UserException("Not Possiable");
 		}
 	}
+
 	@Override
 	public void createMap(LabelDto label, String token, Long noteId) {
-		
-		
+
 	}
 }

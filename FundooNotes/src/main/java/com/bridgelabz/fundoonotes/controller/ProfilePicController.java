@@ -15,13 +15,22 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.bridgelabz.fundoonotes.entity.Profile;
 import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.service.ProfilePicService;
-
+/**
+ * 
+ * @author Srijan Kumar
+ *
+ */
 @RestController
 public class ProfilePicController {
 
 	@Autowired
 	private ProfilePicService profile;
-
+/**
+ * API for the upload the profile picture
+ * @param file
+ * @param token
+ * @return Status
+ */
 	@PostMapping("users/uploadprofilepicture")
 	public ResponseEntity<Response> addProfilePic(@ModelAttribute MultipartFile file,
 			@RequestHeader("token") String token) {
@@ -33,7 +42,12 @@ public class ProfilePicController {
 				: ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("something went Wrong ", 400));
 
 	}
-	
+	/**
+	 * API for the update the profile picture
+	 * @param file
+	 * @param token
+	 * @return Status and Body
+	 */
 	@PutMapping("users/updateprofilepicture")
 	public ResponseEntity<Response> updateProfile(@ModelAttribute MultipartFile file , @RequestHeader("token") String token){
 		Profile profilepic = profile.updateObejctInS3(file, file.getOriginalFilename(), file.getContentType(),
@@ -44,6 +58,11 @@ public class ProfilePicController {
 				: ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("something went Wrong ", 400));
 	}
 	
+	/**
+	 * API for the Get the the profile picture
+	 * @param token
+	 * @return
+	 */
 	@GetMapping("/users/getProfilePicture")
 	public ResponseEntity<Response> getProfilePic(@RequestHeader("token") String token){
 		

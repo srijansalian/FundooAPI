@@ -24,9 +24,6 @@ import lombok.Data;
  * @author Srijan Kumar
  *
  */
-/*
- * Databases connection and the other operation are all taken place
- */
 @Data
 @Entity
 @Table(name = "usersdetail")

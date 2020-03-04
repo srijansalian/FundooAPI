@@ -63,7 +63,7 @@ public class NoteServiceImplementation implements NoteService {
 				user.getNote().add(noteInformation);
 				NoteInformation note = noteRepository.save(noteInformation);
 				if (note != null) {
-					// final String KEY = user.getEmail();
+					
 					try {
 
 						elasticsearch.CreateNote(noteInformation);
