@@ -36,7 +36,6 @@ import com.bridgelabz.fundoonotes.utility.MailServiceProvider;
 @Service
 public class ServiceImplementation implements Services {
 	private UserInformation userInformation = new UserInformation();
-//	private NoteInformation noteInformation = new NoteInformation();
 
 	@Autowired
 	private UserRepository repository;
@@ -52,7 +51,7 @@ public class ServiceImplementation implements Services {
 	private MailObject mailObject;
 	@Autowired
 	private NoteRepository noterepository;
-	
+
 	@Autowired
 	private RabbitmqSender rabbitmq;
 
@@ -77,11 +76,12 @@ public class ServiceImplementation implements Services {
 			mailObject.setEmail(information.getEmail());
 			mailObject.setMessage(mailResponse);
 			mailObject.setSubject("verification");
-			//MailServiceProvider.sendEmail(mailObject.getEmail(), mailObject.getSubject(), mailObject.getMessage());
+			// MailServiceProvider.sendEmail(mailObject.getEmail(), mailObject.getSubject(),
+			// mailObject.getMessage());
 			rabbitmq.send(mailObject);
 			return true;
 		}
-		// throw new UserException("user already exists with the same mail id");
+		
 		return false;
 	}
 
