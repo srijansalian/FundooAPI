@@ -13,10 +13,10 @@ public class UserDetail {
 	private int statuscode;
 	private Object obj;
 
-	public UserDetail(String token, int statuscode, Object obj) {
+	public UserDetail(String token, Object obj) {
 		super();
 		this.token = token;
-		this.statuscode = statuscode;
+		
 		this.obj = obj;
 	}
 

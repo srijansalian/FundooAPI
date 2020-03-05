@@ -50,10 +50,10 @@ public class UserController {
 		boolean value = service.register(information);
 		if (value) {
 			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(new Response("Registration Successfull", 200, information));
+					.body(new Response("Registration Successfull", information));
 		}
 		return ResponseEntity.status(HttpStatus.ALREADY_REPORTED)
-				.body(new Response("User has been already Registered", 208, information));
+				.body(new Response("User has been already Registered"));
 	}
 
 	/**
@@ -67,10 +67,10 @@ public class UserController {
 	public ResponseEntity<Response> userVerfication(@PathVariable("token") String token) throws Exception {
 		boolean update = service.verify(token);
 		if (update) {
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response(token, 200, "Token Has Been Verified"));
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response(token,"Token Has Been Verified"));
 
 		}
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response(token, 401, "Not Verified"));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("Not Verified"));
 	}
 
 	/**
@@ -88,10 +88,10 @@ public class UserController {
 			 * Token must be added in login
 			 */
 			return ResponseEntity.status(HttpStatus.ACCEPTED).header("login successfull", information.getEmail())
-					.body(new UserDetail("Login Sucessfull", 200, information));
+					.body(new UserDetail("Login Sucessfull", information));
 		}
 
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserDetail("Login is failed", 400, information));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserDetail("Login is failed", information));
 
 	}
 
@@ -107,11 +107,11 @@ public class UserController {
 
 		boolean result = service.isUserExist(email);
 		if (result) {
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("User Exists", 200, email));
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("User Exists",email));
 
 		}
 		return ResponseEntity.status(HttpStatus.ACCEPTED)
-				.body(new Response("User Does not exit in the given email id", 400, email));
+				.body(new Response("User Does not exit in the given email id", email));
 
 	}
 
@@ -128,10 +128,10 @@ public class UserController {
 		boolean result = service.update(update, token);
 		if (result) {
 			return ResponseEntity.status(HttpStatus.ACCEPTED)
-					.body(new Response("password updated successfully", 200, update));
+					.body(new Response("password updated successfully",update));
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(new Response("password  does not match", 402, update));
+				.body(new Response("password  does not match"));
 
 	}
 
@@ -145,7 +145,7 @@ public class UserController {
 	public ResponseEntity<Response> getUsers() {
 		List<UserInformation> users = service.getUsers();
 
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The Registered user are", 200, users));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The Registered user are",users));
 
 	}
 
@@ -158,7 +158,7 @@ public class UserController {
 	@GetMapping("user/getsingleusers")
 	public ResponseEntity<Response> getOneUser(@RequestHeader("token") String token) {
 		UserInformation user = service.getsingleUser(token);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The User Details", 200, user));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The User Details",user));
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class UserController {
 
 		NoteInformation note = service.addCollaborator(noteId, email, token);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("collaborator added", 200, note));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("collaborator added",note));
 
 	}
 
@@ -194,7 +194,7 @@ public class UserController {
 			@RequestParam("email") String email, @RequestHeader("token") String token) {
 		service.removecollaborator(noteId, email, token);
 
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("Collaborator has been Removed", 200));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Collaborator has been Removed"));
 	}
 
 	/**
@@ -206,6 +206,6 @@ public class UserController {
 	@GetMapping("user/getCollaborator")
 	public ResponseEntity<Response> getCollaborator(@RequestHeader("token") String token) {
 		List<NoteInformation> note = service.getcollaborator(token);
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("The respective notes are", 200, note));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The respective notes are", note));
 	}
 }

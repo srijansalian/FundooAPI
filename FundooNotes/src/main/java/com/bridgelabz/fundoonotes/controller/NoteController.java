@@ -44,7 +44,7 @@ public class NoteController {
 	public ResponseEntity<Response> create(@RequestBody NoteDto information, @RequestHeader("token") String token) {
 		service.createNote(information, token);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Created", 200, information));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Created",information));
 
 	}
 
@@ -58,7 +58,7 @@ public class NoteController {
 	@PutMapping("/note/update")
 	public ResponseEntity<Response> update(@RequestBody NoteUpdate information, @RequestHeader("token") String token) {
 		service.noteUpdate(information, token);
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note Updated", 201, information));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note Updated", information));
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class NoteController {
 	@PutMapping("/note/pin/{id}")
 	public ResponseEntity<Response> pin(@PathVariable long id, @RequestHeader("token") String token) {
 		service.pinNote(id, token);
-		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Pinned", 201));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Pinned"));
 
 	}
 
@@ -86,7 +86,7 @@ public class NoteController {
 	@PutMapping("/note/archieve/{id}")
 	public ResponseEntity<Response> archieve(@PathVariable long id, @RequestHeader("token") String token) {
 		service.archieve(id, token);
-		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Archieved", 201));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Archieved"));
 
 	}
 
@@ -102,7 +102,7 @@ public class NoteController {
 	public ResponseEntity<Response> delete(@PathVariable long id, @RequestHeader("token") String token) {
 		service.deleteNote(id, token);
 
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note is moved to Trash", 200));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note is moved to Trash"));
 
 	}
 
@@ -118,7 +118,7 @@ public class NoteController {
 	public ResponseEntity<Response> deletepermantely(@PathVariable long id, @RequestHeader("token") String token) {
 		service.deletepermantely(id, token);
 
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note has been Deleted permanetly", 200));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note has been Deleted permanetly"));
 
 	}
 
@@ -131,7 +131,7 @@ public class NoteController {
 	@GetMapping("/note/getallnotes")
 	public ResponseEntity<Response> getallnotes(@RequestHeader("token") String token) {
 		List<NoteInformation> note = service.getallnotes(token);
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("The respective notes are", 200, note));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The respective notes are", note));
 
 	}
 
@@ -145,7 +145,7 @@ public class NoteController {
 	@GetMapping("/notes/getTrashedNotes")
 	public ResponseEntity<Response> gettrashedNotes(@RequestHeader("token") String token) {
 		List<NoteInformation> note1 = service.getTrashedNotes(token);
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Trashed notes are", 200, note1));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Trashed notes are", note1));
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class NoteController {
 	@GetMapping("/notes/getArchiveNotes")
 	public ResponseEntity<Response> getArchiveNotes(@RequestHeader("token") String token) {
 		List<NoteInformation> note1 = service.getArchivedNotes(token);
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Archived notes are", 200, note1));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Archived notes are", note1));
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class NoteController {
 	@GetMapping("/notes/getPinnedNotes")
 	public ResponseEntity<Response> getPinnedNotes(@RequestHeader("token") String token) {
 		List<NoteInformation> note1 = service.getPinnedNotes(token);
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Pinned notes are", 200, note1));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Pinned notes are", note1));
 	}
 
 	/**
@@ -186,7 +186,7 @@ public class NoteController {
 			@RequestParam("colour") String colour, @RequestHeader("token") String token) {
 		service.addcolour(noteId, colour, token);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("The Colour has been Changed", 200, colour));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("The Colour has been Changed", colour));
 
 	}
 
@@ -203,7 +203,7 @@ public class NoteController {
 			@RequestHeader("token") String token, @RequestBody ReminderDto reminder) {
 		service.addReminder(noteId, token, reminder);
 
-		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Remainder has been Added", 200, reminder));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("The Remainder has been Added", reminder));
 
 	}
 
@@ -234,7 +234,7 @@ public class NoteController {
 	public ResponseEntity<Response> search(@RequestParam("title") String title, @RequestHeader("token") String token) {
 		List<NoteInformation> notes = service.searchByTitle(title);
 		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(new Response("The note you are looking for is", 200, notes));
+				.body(new Response("The note you are looking for is", notes));
 
 	}
 

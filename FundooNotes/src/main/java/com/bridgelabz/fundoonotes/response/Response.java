@@ -1,12 +1,10 @@
 package com.bridgelabz.fundoonotes.response;
 
-
-
 import lombok.Data;
+
 /**
  * 
- * @author Srijan Kumar
- *Class for the store all the Response
+ * @author Srijan Kumar Class for the store all the Response
  */
 @Data
 public class Response {
@@ -20,10 +18,24 @@ public class Response {
 		this.statuscode = statuscode;
 		this.obj = obj;
 	}
+
 	public Response(String token, int statuscode) {
 		super();
 		this.token = token;
 		this.statuscode = statuscode;
-		
+
+	}
+
+	public Response(String token) {
+		super();
+		this.token = token;
+
+	}
+
+	public Response(String token, Object obj) {
+		super();
+		this.token = token;
+
+		this.obj = obj;
 	}
 }
