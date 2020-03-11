@@ -14,6 +14,8 @@ import com.bridgelabz.fundoonotes.dto.LabelUpdate;
 import com.bridgelabz.fundoonotes.entity.LabelInformation;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
+import com.bridgelabz.fundoonotes.exception.LabelException;
+
 import com.bridgelabz.fundoonotes.exception.UserException;
 import com.bridgelabz.fundoonotes.repository.LabelRepo;
 import com.bridgelabz.fundoonotes.repository.LabelRepository;
@@ -73,7 +75,7 @@ public class LabelServiceImplementation implements LabelService {
 					labelInformation.setUserId(user.getUserId());
 					repository.save(labelInformation);
 				} else {
-					throw new UserException("label with the given name is already present");
+					throw new LabelException("label with the given name is already present");
 				}
 			}
 		} catch (Exception e) {
@@ -137,7 +139,7 @@ public class LabelServiceImplementation implements LabelService {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("User does not Exist");
+			throw new UserException("User does not Exist");
 		}
 	}
 
@@ -154,8 +156,6 @@ public class LabelServiceImplementation implements LabelService {
 			UserInformation user = userrepository.getUserById(id);
 			if (user != null) {
 
-				// LabelInformation lableinformation =
-				// labelrepo.fetchLabelById(label.getLabelId());
 				LabelInformation lableinformation = labelRepository.fetchbyId(label.getLabelId());
 				if (lableinformation != null) {
 					// labelrepo.deleteLabel(label.getLabelId());
@@ -163,13 +163,13 @@ public class LabelServiceImplementation implements LabelService {
 					labelRepository.deletebyId(label.getLabelId());
 
 				} else {
-					throw new UserException("Not Found");
+					throw new LabelException("Label Not Found");
 				}
 
 			}
 
 		} catch (Exception e) {
-			System.out.println("Not Possible");
+			throw new UserException("User not found");
 		}
 
 	}

@@ -43,7 +43,7 @@ public class UserController {
 	 * @return Status and the Body
 	 */
 
-	@PostMapping("/user/registration")
+	@PostMapping("/users/register")
 
 	public ResponseEntity<Response> registration(@RequestBody UserDto information) {
 
@@ -79,7 +79,7 @@ public class UserController {
 	 * @param information
 	 * @return Status and Body
 	 */
-	@PostMapping("user/login")
+	@PostMapping("users/login")
 	public ResponseEntity<UserDetail> login(@RequestBody LoginInformation information) {
 		UserInformation userInformation = service.login(information);
 		if (userInformation != null) {
@@ -102,7 +102,7 @@ public class UserController {
 	 * @return Respective Status and The Body
 	 */
 
-	@PostMapping("/user/forgotpassword")
+	@PostMapping("/users/forgotpassword")
 	public ResponseEntity<Response> forgotPassword(@RequestParam("email") String email) {
 
 		boolean result = service.isUserExist(email);
@@ -123,7 +123,7 @@ public class UserController {
 	 * @return Status and Body
 	 */
 
-	@PutMapping("/user/update/{token}")
+	@PutMapping("/users/update/{token}")
 	public ResponseEntity<Response> update(@PathVariable("token") String token, @RequestBody PasswordUpdate update) {
 		boolean result = service.update(update, token);
 		if (result) {
@@ -141,7 +141,7 @@ public class UserController {
 	 * @return status and body
 	 */
 
-	@GetMapping("user/getusers")
+	@GetMapping("users/getusers")
 	public ResponseEntity<Response> getUsers() {
 		List<UserInformation> users = service.getUsers();
 
@@ -170,7 +170,7 @@ public class UserController {
 	 * @return status and Body
 	 */
 
-	@PostMapping("user/addCollaborator")
+	@PostMapping("users/addCollaborator")
 	public ResponseEntity<Response> addCollaborator(@RequestParam("noteId") Long noteId,
 			@RequestParam("email") String email, @RequestHeader("token") String token) {
 
@@ -189,7 +189,7 @@ public class UserController {
 	 * @return Status and Body
 	 */
 
-	@DeleteMapping("user/removeCollaborator")
+	@DeleteMapping("users/removeCollaborator")
 	public ResponseEntity<Response> removecollaborator(@RequestParam("noteId") Long noteId,
 			@RequestParam("email") String email, @RequestHeader("token") String token) {
 		service.removecollaborator(noteId, email, token);
@@ -203,7 +203,7 @@ public class UserController {
 	 * @param token
 	 * @return
 	 */
-	@GetMapping("user/getCollaborator")
+	@GetMapping("users/getCollaborator")
 	public ResponseEntity<Response> getCollaborator(@RequestHeader("token") String token) {
 		List<NoteInformation> note = service.getcollaborator(token);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("The respective notes are", note));

@@ -14,6 +14,7 @@ import com.bridgelabz.fundoonotes.dto.NoteUpdate;
 import com.bridgelabz.fundoonotes.dto.ReminderDto;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
+import com.bridgelabz.fundoonotes.exception.NoteException;
 import com.bridgelabz.fundoonotes.exception.UserException;
 import com.bridgelabz.fundoonotes.repository.NoteRepository;
 import com.bridgelabz.fundoonotes.repository.UserRepository;
@@ -63,13 +64,13 @@ public class NoteServiceImplementation implements NoteService {
 				user.getNote().add(noteInformation);
 				NoteInformation note = noteRepository.save(noteInformation);
 				if (note != null) {
-					
+
 					try {
 
 						elasticsearch.CreateNote(noteInformation);
 
 					} catch (Exception e) {
-						e.printStackTrace();
+						throw new NoteException("Not possiable to create");
 					}
 				}
 
@@ -213,7 +214,7 @@ public class NoteServiceImplementation implements NoteService {
 				System.out.println(list2);
 				return list2;
 			} else {
-				throw new UserException("note is not present");
+				throw new NoteException("note is not present");
 			}
 
 		} catch (Exception e) {
@@ -236,7 +237,7 @@ public class NoteServiceImplementation implements NoteService {
 				System.out.println(list3);
 				return list3;
 			} else {
-				throw new UserException("note is not present");
+				throw new NoteException("note is not present");
 			}
 
 		} catch (Exception e) {
@@ -260,7 +261,7 @@ public class NoteServiceImplementation implements NoteService {
 				System.out.println(list4);
 				return list4;
 			} else {
-				throw new UserException("note is not present");
+				throw new NoteException("note is not present");
 			}
 
 		} catch (Exception e) {
@@ -284,7 +285,7 @@ public class NoteServiceImplementation implements NoteService {
 				System.out.println(list5);
 				return list5;
 			} else {
-				throw new UserException("note is not present");
+				throw new NoteException("note is not present");
 			}
 
 		} catch (Exception e) {
@@ -331,11 +332,11 @@ public class NoteServiceImplementation implements NoteService {
 				noteRepository.save(info);
 
 			} else {
-				throw new UserException("User not found");
+				throw new NoteException("Note not found");
 			}
 
 		} catch (Exception e) {
-			throw new UserException("Not Possible");
+			throw new UserException("User Does not exist");
 		}
 
 	}
@@ -356,7 +357,7 @@ public class NoteServiceImplementation implements NoteService {
 				noteRepository.save(info);
 
 			} else {
-				throw new UserException("User not found");
+				throw new NoteException("Note is not found");
 			}
 
 		} catch (Exception e) {

@@ -40,7 +40,7 @@ public class NoteController {
 	 * @param token
 	 * @return status
 	 */
-	@PostMapping("/note/create")
+	@PostMapping("/notes/create")
 	public ResponseEntity<Response> create(@RequestBody NoteDto information, @RequestHeader("token") String token) {
 		service.createNote(information, token);
 
@@ -55,7 +55,7 @@ public class NoteController {
 	 * @param token
 	 * @return Status
 	 */
-	@PutMapping("/note/update")
+	@PutMapping("/notes/update")
 	public ResponseEntity<Response> update(@RequestBody NoteUpdate information, @RequestHeader("token") String token) {
 		service.noteUpdate(information, token);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Note Updated", information));
@@ -83,7 +83,7 @@ public class NoteController {
 	 * @return status
 	 */
 
-	@PutMapping("/note/archieve/{id}")
+	@PutMapping("/notes/archieve/{id}")
 	public ResponseEntity<Response> archieve(@PathVariable long id, @RequestHeader("token") String token) {
 		service.archieve(id, token);
 		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("Note Archieved"));
@@ -114,7 +114,7 @@ public class NoteController {
 	 * @return status and the Body
 	 */
 
-	@DeleteMapping("/note/deletepermantely/{id}")
+	@DeleteMapping("/notes/deletepermantely/{id}")
 	public ResponseEntity<Response> deletepermantely(@PathVariable long id, @RequestHeader("token") String token) {
 		service.deletepermantely(id, token);
 
@@ -128,7 +128,7 @@ public class NoteController {
 	 * @param token
 	 * @return status and the Body
 	 */
-	@GetMapping("/note/getallnotes")
+	@GetMapping("/notes/getallnotes")
 	public ResponseEntity<Response> getallnotes(@RequestHeader("token") String token) {
 		List<NoteInformation> note = service.getallnotes(token);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("The respective notes are", note));
@@ -230,7 +230,7 @@ public class NoteController {
 	 * @param token
 	 * @return
 	 */
-	@GetMapping("/note/search")
+	@GetMapping("/notes/search")
 	public ResponseEntity<Response> search(@RequestParam("title") String title, @RequestHeader("token") String token) {
 		List<NoteInformation> notes = service.searchByTitle(title);
 		return ResponseEntity.status(HttpStatus.CREATED)

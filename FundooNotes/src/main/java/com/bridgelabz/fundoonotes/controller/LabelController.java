@@ -39,7 +39,7 @@ public class LabelController {
 	 * @return status and the Body
 	 */
 
-	@PostMapping("/label/create")
+	@PostMapping("/labels/create")
 	public ResponseEntity<Response> create(@RequestBody LabelDto label, @RequestHeader("token") String token) {
 		service.createLabel(label, token);
 
@@ -56,7 +56,7 @@ public class LabelController {
 	 * @return Body and Status
 	 */
 
-	@PostMapping("/label/addlabel")
+	@PostMapping("/labels/addlabel")
 	public ResponseEntity<Response> addlabel(@RequestParam("noteId") Long noteId, @RequestHeader("token") String token,
 			@RequestParam("labelId") Long labelId) {
 		service.addlabel(noteId, token, labelId);
@@ -74,7 +74,7 @@ public class LabelController {
 	 * @return status and Body
 	 */
 
-	@PutMapping("/label/removelabel")
+	@PutMapping("/labels/removelabel")
 	public ResponseEntity<Response> removelabel(@RequestParam("noteId") Long noteId,
 			@RequestHeader("token") String token, @RequestParam("labelId") Long labelId) {
 		service.removelabel(noteId, token, labelId);
@@ -88,7 +88,7 @@ public class LabelController {
 	 * @param token
 	 * @return status and Body
 	 */
-	@PutMapping("/label/updatelabel")
+	@PutMapping("/labels/updatelabel")
 	public ResponseEntity<Response> updatelabel(@RequestBody LabelUpdate label, @RequestHeader("token") String token) {
 
 		service.update(label, token);
@@ -104,7 +104,7 @@ public class LabelController {
 	 * @return
 	 */
 
-	@DeleteMapping("/label/deletelabel")
+	@DeleteMapping("/labels/deletelabel")
 	public ResponseEntity<Response> deletelabel(@RequestBody LabelUpdate label, @RequestHeader("token") String token) {
 		service.delete(label, token);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("Label has been Deleted", label));
@@ -118,7 +118,7 @@ public class LabelController {
 	 * @return
 	 */
 
-	@GetMapping("/label/getAllLabel")
+	@GetMapping("/labels/getAllLabel")
 	public ResponseEntity<Response> getAllLabel(@RequestHeader("token") String token) {
 
 		List<LabelInformation> Label = service.getLabel(token);
@@ -135,7 +135,7 @@ public class LabelController {
 	 * @return
 	 */
 
-	@PostMapping("/label/createAndMap")
+	@PostMapping("/labels/createAndMap")
 	public ResponseEntity<Response> createAndMAp(@RequestBody LabelDto label, @RequestHeader("token") String token,
 			@RequestParam("noteId") Long noteId) {
 		service.createAndMap(label, token, noteId);

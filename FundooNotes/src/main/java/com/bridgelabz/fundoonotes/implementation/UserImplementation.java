@@ -34,7 +34,7 @@ import com.bridgelabz.fundoonotes.utility.MailServiceProvider;
  * Implementation for the service declaration
  */
 @Service
-public class ServiceImplementation implements Services {
+public class UserImplementation implements Services {
 	private UserInformation userInformation = new UserInformation();
 
 	@Autowired
