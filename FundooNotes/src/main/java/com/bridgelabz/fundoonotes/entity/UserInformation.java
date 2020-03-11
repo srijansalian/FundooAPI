@@ -14,6 +14,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -33,7 +37,11 @@ public class UserInformation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userId;
 	private String name;
+	@NotBlank(message = "Password is mandatory")
 	private String password;
+
+	
+	@NotNull
 	private String email;
 	private long mobilenumber;
 	private LocalDateTime createDate;
