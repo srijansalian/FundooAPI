@@ -7,8 +7,10 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.amazonaws.services.xray.model.Http;
 import com.bridgelabz.fundoonotes.dto.NoteDto;
 import com.bridgelabz.fundoonotes.dto.NoteUpdate;
 import com.bridgelabz.fundoonotes.dto.ReminderDto;
@@ -70,14 +72,15 @@ public class NoteServiceImplementation implements NoteService {
 						elasticsearch.CreateNote(noteInformation);
 
 					} catch (Exception e) {
-						throw new NoteException("Not possiable to create");
+						throw new NoteException("Not possiable to create",HttpStatus.NOT_ACCEPTABLE);
 					}
 				}
 
 			}
 
 		} catch (Exception e) {
-			throw new UserException("User does not Register !!!!!!!!");
+			
+			throw new UserException("User does not Register !!!!!!!!",HttpStatus.NOT_ACCEPTABLE);
 		}
 
 	}
@@ -110,7 +113,8 @@ public class NoteServiceImplementation implements NoteService {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new UserException("User does not register");
+			throw new UserException("User does not register",HttpStatus.NOT_FOUND);
+			
 		}
 
 	}
@@ -131,7 +135,7 @@ public class NoteServiceImplementation implements NoteService {
 				noteRepository.save(info);
 			}
 		} catch (Exception e) {
-			throw new UserException("User is not register");
+			throw new UserException("User is not register",HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -153,7 +157,7 @@ public class NoteServiceImplementation implements NoteService {
 				noteRepository.save(info);
 			}
 		} catch (Exception e) {
-			throw new UserException("User does not exit");
+			throw new UserException("User does not exit",HttpStatus.NOT_FOUND);
 		}
 
 	}
@@ -191,7 +195,7 @@ public class NoteServiceImplementation implements NoteService {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new UserException("Not possiable");
+			throw new UserException("user does not exist",HttpStatus.NOT_FOUND);
 
 		}
 		return false;
@@ -214,11 +218,11 @@ public class NoteServiceImplementation implements NoteService {
 				System.out.println(list2);
 				return list2;
 			} else {
-				throw new NoteException("note is not present");
+				throw new NoteException("note is not present",HttpStatus.NOT_FOUND);
 			}
 
 		} catch (Exception e) {
-			throw new UserException("User is not found");
+			throw new UserException("User is not found",HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -237,11 +241,11 @@ public class NoteServiceImplementation implements NoteService {
 				System.out.println(list3);
 				return list3;
 			} else {
-				throw new NoteException("note is not present");
+				throw new NoteException("Note is not present",HttpStatus.NOT_FOUND);
 			}
 
 		} catch (Exception e) {
-			throw new UserException("User is not found");
+			throw new UserException("User is not found",HttpStatus.NOT_FOUND);
 		}
 
 	}
@@ -261,11 +265,11 @@ public class NoteServiceImplementation implements NoteService {
 				System.out.println(list4);
 				return list4;
 			} else {
-				throw new NoteException("note is not present");
+				throw new NoteException("Note is not present",HttpStatus.NOT_FOUND);
 			}
 
 		} catch (Exception e) {
-			throw new UserException("User is not found");
+			throw new UserException("User is not found",HttpStatus.NOT_FOUND);
 		}
 
 	}
@@ -285,11 +289,11 @@ public class NoteServiceImplementation implements NoteService {
 				System.out.println(list5);
 				return list5;
 			} else {
-				throw new NoteException("note is not present");
+				throw new NoteException("Note is not present",HttpStatus.NOT_FOUND);
 			}
 
 		} catch (Exception e) {
-			throw new UserException("User is not found");
+			throw new UserException("User is not found",HttpStatus.NOT_FOUND);
 		}
 
 	}
@@ -310,7 +314,7 @@ public class NoteServiceImplementation implements NoteService {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new UserException("Not possible");
+			throw new UserException("user does not exist",HttpStatus.NOT_FOUND);
 
 		}
 
@@ -332,11 +336,11 @@ public class NoteServiceImplementation implements NoteService {
 				noteRepository.save(info);
 
 			} else {
-				throw new NoteException("Note not found");
+				throw new NoteException("Note not found",HttpStatus.NOT_FOUND);
 			}
 
 		} catch (Exception e) {
-			throw new UserException("User Does not exist");
+			throw new UserException("User Does not exist",HttpStatus.NOT_FOUND);
 		}
 
 	}
@@ -357,11 +361,11 @@ public class NoteServiceImplementation implements NoteService {
 				noteRepository.save(info);
 
 			} else {
-				throw new NoteException("Note is not found");
+				throw new NoteException("Note is not found",HttpStatus.NOT_FOUND);
 			}
 
 		} catch (Exception e) {
-			throw new UserException("Not Possible");
+			throw new UserException("user not exist",HttpStatus.NOT_FOUND);
 		}
 
 	}

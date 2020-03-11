@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -137,7 +138,7 @@ public class UserImplementation implements UserServices {
 			}
 
 		} catch (Exception e) {
-			throw new UserException("User does not exit");
+			throw new UserException("User does not exit",HttpStatus.NOT_FOUND);
 		}
 
 	}
@@ -158,7 +159,7 @@ public class UserImplementation implements UserServices {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new UserException("Invalid Input");
+			throw new UserException("User does not exit",HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -184,7 +185,7 @@ public class UserImplementation implements UserServices {
 			id = (Long) generate.parseJWT(token);
 
 		} catch (Exception e) {
-			throw new UserException("user does not exist");
+			throw new UserException("User does not exit",HttpStatus.NOT_FOUND);
 
 		}
 		UserInformation user = repository.getUserById(id);
@@ -215,14 +216,16 @@ public class UserImplementation implements UserServices {
 					rabbitmq.send(mailObject);
 					return note;
 				} else {
-					throw new UserException("The collaborator does not exist");
+
+					throw new UserException("The collaborator does not exist",HttpStatus.NOT_FOUND);
 				}
 			} else {
-				throw new UserException("The User does not exist");
+				throw new UserException("User does not exit",HttpStatus.NOT_FOUND);
 			}
 
 		} catch (Exception e) {
-			throw new UserException("Not Possible");
+			throw new UserException("User does not exit",HttpStatus.NOT_FOUND);
+			
 		}
 
 	}
@@ -246,7 +249,7 @@ public class UserImplementation implements UserServices {
 			}
 
 		} catch (Exception e) {
-			throw new UserException("Not Possible");
+			throw new UserException("User does not exit",HttpStatus.NOT_FOUND);
 		}
 	}
 

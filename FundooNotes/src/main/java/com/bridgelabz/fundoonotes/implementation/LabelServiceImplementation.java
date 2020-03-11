@@ -6,9 +6,10 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.amazonaws.services.xray.model.Http;
 import com.bridgelabz.fundoonotes.dto.LabelDto;
 import com.bridgelabz.fundoonotes.dto.LabelUpdate;
 import com.bridgelabz.fundoonotes.entity.LabelInformation;
@@ -75,12 +76,12 @@ public class LabelServiceImplementation implements LabelService {
 					labelInformation.setUserId(user.getUserId());
 					repository.save(labelInformation);
 				} else {
-					throw new LabelException("label with the given name is already present");
+					throw new LabelException("label with the given name is already present",HttpStatus.NOT_FOUND);
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new UserException("Note does not exist with the given id");
+			throw new UserException("Note does not exist with the given id",HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -139,7 +140,7 @@ public class LabelServiceImplementation implements LabelService {
 				}
 			}
 		} catch (Exception e) {
-			throw new UserException("User does not Exist");
+			throw new UserException("User does not Exist",HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -163,13 +164,13 @@ public class LabelServiceImplementation implements LabelService {
 					labelRepository.deletebyId(label.getLabelId());
 
 				} else {
-					throw new LabelException("Label Not Found");
+					throw new LabelException("Label Not Found",HttpStatus.NOT_FOUND);
 				}
 
 			}
 
 		} catch (Exception e) {
-			throw new UserException("User not found");
+			throw new UserException("User not found",HttpStatus.NOT_FOUND);
 		}
 
 	}
@@ -187,7 +188,7 @@ public class LabelServiceImplementation implements LabelService {
 			id = (long) tokenGenrator.parseJWT(token);
 		} catch (Exception e) {
 
-			throw new UserException("note does not exist");
+			throw new UserException("note does not exist",HttpStatus.NOT_FOUND);
 		}
 
 		List<LabelInformation> labels = labelRepository.fetchlabelbyId(id);
@@ -222,7 +223,7 @@ public class LabelServiceImplementation implements LabelService {
 
 			}
 		} catch (Exception e) {
-			throw new UserException("Not Possiable");
+			throw new UserException("Not Possiable",HttpStatus.NOT_FOUND);
 		}
 	}
 

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,14 +15,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.s3.model.S3Object;
 import com.bridgelabz.fundoonotes.dto.LoginInformation;
 import com.bridgelabz.fundoonotes.dto.PasswordUpdate;
 import com.bridgelabz.fundoonotes.dto.UserDto;
 import com.bridgelabz.fundoonotes.entity.NoteInformation;
+import com.bridgelabz.fundoonotes.entity.Profile;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
 import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.response.UserDetail;
+import com.bridgelabz.fundoonotes.service.ProfilePicService;
 import com.bridgelabz.fundoonotes.service.UserServices;
 
 /**
@@ -35,6 +40,9 @@ public class UserController {
 
 	@Autowired
 	private UserServices service;
+
+	@Autowired
+	private ProfilePicService profile;
 
 	/**
 	 * API for the Registration
@@ -67,7 +75,7 @@ public class UserController {
 	public ResponseEntity<Response> userVerfication(@PathVariable("token") String token) throws Exception {
 		boolean update = service.verify(token);
 		if (update) {
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response(token,"Token Has Been Verified"));
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response(token, "Token Has Been Verified"));
 
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("Not Verified"));
@@ -107,7 +115,7 @@ public class UserController {
 
 		boolean result = service.isUserExist(email);
 		if (result) {
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("User Exists",email));
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("User Exists", email));
 
 		}
 		return ResponseEntity.status(HttpStatus.ACCEPTED)
@@ -128,10 +136,9 @@ public class UserController {
 		boolean result = service.update(update, token);
 		if (result) {
 			return ResponseEntity.status(HttpStatus.ACCEPTED)
-					.body(new Response("password updated successfully",update));
+					.body(new Response("password updated successfully", update));
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(new Response("password  does not match"));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("password  does not match"));
 
 	}
 
@@ -145,7 +152,7 @@ public class UserController {
 	public ResponseEntity<Response> getUsers() {
 		List<UserInformation> users = service.getUsers();
 
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The Registered user are",users));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The Registered user are", users));
 
 	}
 
@@ -158,7 +165,7 @@ public class UserController {
 	@GetMapping("user/getsingleusers")
 	public ResponseEntity<Response> getOneUser(@RequestHeader("token") String token) {
 		UserInformation user = service.getsingleUser(token);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The User Details",user));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("The User Details", user));
 	}
 
 	/**
@@ -176,7 +183,7 @@ public class UserController {
 
 		NoteInformation note = service.addCollaborator(noteId, email, token);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("collaborator added",note));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Response("collaborator added", note));
 
 	}
 
@@ -207,5 +214,53 @@ public class UserController {
 	public ResponseEntity<Response> getCollaborator(@RequestHeader("token") String token) {
 		List<NoteInformation> note = service.getcollaborator(token);
 		return ResponseEntity.status(HttpStatus.OK).body(new Response("The respective notes are", note));
+	}
+
+	/**
+	 * API for the upload the profile picture
+	 * 
+	 * @param file
+	 * @param token
+	 * @return Status
+	 */
+	@PostMapping("users/uploadprofilepicture")
+	public ResponseEntity<Response> addProfilePic(@ModelAttribute MultipartFile file,
+			@RequestHeader("token") String token) {
+
+		Profile profilepic = profile.storeObjectInS3(file, file.getOriginalFilename(), file.getContentType(), token);
+		return profilepic.getUserLabel() != null
+				? ResponseEntity.status(HttpStatus.OK).body(new Response("profile added succussefully", profilepic))
+				: ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("Something went Wrong "));
+
+	}
+
+	/**
+	 * API for the update the profile picture
+	 * 
+	 * @param file
+	 * @param token
+	 * @return Status and Body
+	 */
+	@PutMapping("users/updateprofilepicture")
+	public ResponseEntity<Response> updateProfile(@ModelAttribute MultipartFile file,
+			@RequestHeader("token") String token) {
+		Profile profilepic = profile.updateObejctInS3(file, file.getOriginalFilename(), file.getContentType(), token);
+		return profilepic.getUserLabel() != null
+				? ResponseEntity.status(HttpStatus.OK).body(new Response("profile Has Been Updated", profilepic))
+				: ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("something went Wrong "));
+	}
+
+	/**
+	 * API for the Get the the profile picture
+	 * 
+	 * @param token
+	 * @return
+	 */
+	@GetMapping("/users/getProfilePicture")
+	public ResponseEntity<Response> getProfilePic(@RequestHeader("token") String token) {
+
+		S3Object s3 = profile.getProfilePic(token);
+		return s3 != null ? ResponseEntity.status(HttpStatus.OK).body(new Response("The Details Are", s3))
+				: ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("no profile pic "));
 	}
 }
