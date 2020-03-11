@@ -12,7 +12,7 @@ import com.bridgelabz.fundoonotes.entity.UserInformation;
  * 
  * @author Srijan Kumar Service Declaration class
  */
-public interface Services {
+public interface UserServices {
 	boolean register(UserDto information);
 
 	UserInformation login(LoginInformation information);

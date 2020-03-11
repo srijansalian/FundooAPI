@@ -21,7 +21,7 @@ import com.bridgelabz.fundoonotes.repository.NoteRepository;
 import com.bridgelabz.fundoonotes.repository.UserRepository;
 import com.bridgelabz.fundoonotes.response.MailObject;
 import com.bridgelabz.fundoonotes.response.MailResponse;
-import com.bridgelabz.fundoonotes.service.Services;
+import com.bridgelabz.fundoonotes.service.UserServices;
 import com.bridgelabz.fundoonotes.utility.JwtGenerator;
 import com.bridgelabz.fundoonotes.utility.MailServiceProvider;
 
@@ -34,7 +34,7 @@ import com.bridgelabz.fundoonotes.utility.MailServiceProvider;
  * Implementation for the service declaration
  */
 @Service
-public class UserImplementation implements Services {
+public class UserImplementation implements UserServices {
 	private UserInformation userInformation = new UserInformation();
 
 	@Autowired

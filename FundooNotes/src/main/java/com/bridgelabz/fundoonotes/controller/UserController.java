@@ -22,7 +22,7 @@ import com.bridgelabz.fundoonotes.entity.NoteInformation;
 import com.bridgelabz.fundoonotes.entity.UserInformation;
 import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.response.UserDetail;
-import com.bridgelabz.fundoonotes.service.Services;
+import com.bridgelabz.fundoonotes.service.UserServices;
 
 /**
  * 
@@ -34,7 +34,7 @@ import com.bridgelabz.fundoonotes.service.Services;
 public class UserController {
 
 	@Autowired
-	private Services service;
+	private UserServices service;
 
 	/**
 	 * API for the Registration
