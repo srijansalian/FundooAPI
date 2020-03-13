@@ -28,6 +28,7 @@ import com.bridgelabz.fundoonotes.response.Response;
 import com.bridgelabz.fundoonotes.response.UserDetail;
 import com.bridgelabz.fundoonotes.service.ProfilePicService;
 import com.bridgelabz.fundoonotes.service.UserServices;
+import com.bridgelabz.fundoonotes.utility.JwtGenerator;
 
 /**
  * 
@@ -43,6 +44,9 @@ public class UserController {
 
 	@Autowired
 	private ProfilePicService profile;
+	
+	@Autowired
+	private JwtGenerator generate;
 
 	/**
 	 * API for the Registration
@@ -95,11 +99,13 @@ public class UserController {
 			/*
 			 * Token must be added in login
 			 */
-			return ResponseEntity.status(HttpStatus.ACCEPTED).header("login successfull", information.getEmail())
-					.body(new UserDetail("Login Sucessfull", information));
+			String token = generate.JwtToken(userInformation.getUserId());
+			System.out.println(token);
+			return ResponseEntity.status(HttpStatus.OK).header("login successfull", information.getEmail())
+					.body(new UserDetail(token,200,information));
 		}
 
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserDetail("Login is failed", information));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserDetail("Login is failed",400));
 
 	}
 
@@ -111,15 +117,15 @@ public class UserController {
 	 */
 
 	@PostMapping("/users/forgotpassword")
-	public ResponseEntity<Response> forgotPassword(@RequestParam("email") String email) {
+	public ResponseEntity<Response> forgotPassword(@RequestBody LoginInformation info) {
 
-		boolean result = service.isUserExist(email);
+		boolean result = service.isUserExist(info.getEmail());
 		if (result) {
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("User Exists", email));
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("User Exists", info.getEmail()));
 
 		}
 		return ResponseEntity.status(HttpStatus.ACCEPTED)
-				.body(new Response("User Does not exit in the given email id", email));
+				.body(new Response("User Does not exit in the given email id", info.getEmail()));
 
 	}
 

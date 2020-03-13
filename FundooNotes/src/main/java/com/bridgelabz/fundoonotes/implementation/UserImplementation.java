@@ -77,8 +77,8 @@ public class UserImplementation implements UserServices {
 			mailObject.setEmail(information.getEmail());
 			mailObject.setMessage(mailResponse);
 			mailObject.setSubject("verification");
-			// MailServiceProvider.sendEmail(mailObject.getEmail(), mailObject.getSubject(),
-			// mailObject.getMessage());
+			 MailServiceProvider.sendEmail(mailObject.getEmail(), mailObject.getSubject(),
+			 mailObject.getMessage());
 			rabbitmq.send(mailObject);
 			return true;
 		}
@@ -96,9 +96,10 @@ public class UserImplementation implements UserServices {
 		if (user != null) {
 			if ((user.is_verified() == true) && (encryption.matches(information.getPassword(), user.getPassword()))) {
 				System.out.println(generate.JwtToken(user.getUserId()));
+				System.out.println(user);
 				return user;
 			} else {
-				String mailResponse = response.fromMessage("http://localhost:8080/verify",
+				String mailResponse = response.fromMessage("http://localhost:8080/users/verify",
 						generate.JwtToken(user.getUserId()));
 				MailServiceProvider.sendEmail(information.getEmail(), "Verification", mailResponse);
 				return null;
@@ -129,7 +130,7 @@ public class UserImplementation implements UserServices {
 		try {
 			UserInformation user = repository.getUser(email);
 			if (user.is_verified() == true) {
-				String mailResponse = response.fromMessage("http://localhost:8080/verify",
+				String mailResponse = response.fromMessage("http://localhost:8080/users/verify",
 						generate.JwtToken(user.getUserId()));
 				MailServiceProvider.sendEmail(user.getEmail(), "Verification", mailResponse);
 				return true;

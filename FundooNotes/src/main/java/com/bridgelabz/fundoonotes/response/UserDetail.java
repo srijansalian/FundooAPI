@@ -17,6 +17,13 @@ public class UserDetail {
 		super();
 		this.token = token;
 		
+		
+	}
+
+	public UserDetail(String token, int statuscode, Object obj) {
+		super();
+		this.token = token;
+		this.statuscode = statuscode;
 		this.obj = obj;
 	}
 
