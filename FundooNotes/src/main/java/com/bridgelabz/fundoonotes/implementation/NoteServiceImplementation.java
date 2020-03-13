@@ -65,16 +65,16 @@ public class NoteServiceImplementation implements NoteService {
 
 				user.getNote().add(noteInformation);
 				NoteInformation note = noteRepository.save(noteInformation);
-				if (note != null) {
-
-					try {
-
-						elasticsearch.CreateNote(noteInformation);
-
-					} catch (Exception e) {
-						throw new NoteException("Not possiable to create",HttpStatus.NOT_ACCEPTABLE);
-					}
-				}
+				/*
+				 * if (note != null) {
+				 * 
+				 * try {
+				 * 
+				 * elasticsearch.CreateNote(noteInformation);
+				 * 
+				 * } catch (Exception e) { throw new
+				 * NoteException("Not possiable to create",HttpStatus.NOT_ACCEPTABLE); } }
+				 */
 
 			}
 

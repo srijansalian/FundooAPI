@@ -8,33 +8,33 @@ import lombok.Data;
  */
 @Data
 public class Response {
-	private String token;
+	private String message;
 	private int statuscode;
 	private Object obj;
 
 	public Response(String token, int statuscode, Object obj) {
 		super();
-		this.token = token;
+		this.message = token;
 		this.statuscode = statuscode;
 		this.obj = obj;
 	}
 
 	public Response(String token, int statuscode) {
 		super();
-		this.token = token;
+		this.message = token;
 		this.statuscode = statuscode;
 
 	}
 
 	public Response(String token) {
 		super();
-		this.token = token;
+		this.message = token;
 
 	}
 
 	public Response(String token, Object obj) {
 		super();
-		this.token = token;
+		this.message = token;
 
 		this.obj = obj;
 	}
