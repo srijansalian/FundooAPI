@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class PasswordUpdate {
-	private String email;
+	
 	private String password;
 	private String confirmPassword;
 

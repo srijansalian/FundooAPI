@@ -122,6 +122,7 @@ public class UserController {
 		boolean result = service.isUserExist(info.getEmail());
 		if (result) {
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("User Exists", info.getEmail()));
+			
 
 		}
 		return ResponseEntity.status(HttpStatus.ACCEPTED)
@@ -137,8 +138,9 @@ public class UserController {
 	 * @return Status and Body
 	 */
 
-	@PutMapping("/users/update/{token}")
+	@PutMapping("/users/resetpassword/{token}")
 	public ResponseEntity<Response> update(@PathVariable("token") String token, @RequestBody PasswordUpdate update) {
+		System.out.println("in update password"+token);
 		boolean result = service.update(update, token);
 		if (result) {
 			return ResponseEntity.status(HttpStatus.ACCEPTED)

@@ -11,6 +11,10 @@ import org.springframework.stereotype.Component;
 		public String fromMessage(String url, String token) {
 			return url + "/" + token;
 		}
+		
+		public String fromMessage(String url) {
+			return url;
+		}
 
 }
 

@@ -130,8 +130,9 @@ public class UserImplementation implements UserServices {
 		try {
 			UserInformation user = repository.getUser(email);
 			if (user.is_verified() == true) {
-				String mailResponse = response.fromMessage("http://localhost:8080/users/verify",
-						generate.JwtToken(user.getUserId()));
+//				String mailResponse = response.fromMessage("http://localhost:8080/users/verify",
+//						generate.JwtToken(user.getUserId()));
+				String mailResponse = response.fromMessage("http://localhost:4200/resetpassword",generate.JwtToken(user.getUserId()));
 				MailServiceProvider.sendEmail(user.getEmail(), "Verification", mailResponse);
 				return true;
 			} else {
@@ -153,7 +154,7 @@ public class UserImplementation implements UserServices {
 		Long id = null;
 		System.out.println("hello");
 		try {
-			id = (Long) generate.parseJWT(token);
+			id = (Long) generate.parseJWT(token);	
 			String epassword = encryption.encode(information.getConfirmPassword());
 			information.setConfirmPassword(epassword);
 			return repository.upDate(information, id);
